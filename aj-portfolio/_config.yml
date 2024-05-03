@@ -1,0 +1,34 @@
+# Site settings
+title: Ahmed Jerbi
+description: A collection of things I do for a living and for fun.
+author: Ahmed Jerbi
+
+# Build settings
+theme: minima
+
+# Exclude from processing.
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor/bundle/
+  - vendor/cache/
+  - vendor/gems/
+  - vendor/ruby/
+
+# Jekyll Feed plugin settings
+feed:
+  path: feed.xml
+  posts_limit: 10
+
+# Jekyll SEO Tag plugin settings
+seo:
+  title: Ahmed Jerbi
+  description: A collection of things I do for a living and for fun.
+  image: /assets/images/cover.jpg
+  lang: en_US
+ 
+include:
+  - _pages
+# Pagination
+paginate: 5
