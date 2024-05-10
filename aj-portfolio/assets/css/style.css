@@ -1,65 +1,98 @@
+/* Define color palette */
+:root {
+    --primary-color: #868686; /* Primary color */
+    --text-color: #000000; /* Secondary color */
+    --hover-color: #a91111; /* Hover color */
+    --body-background-color: #f6f6f6;
+    --side-color: #d1d0d0;
+}
+
+.container {
+    display: flex; /* Use flexbox */
+}
+
+/* Main */
+body {
+    font-family: "MyFont", monospace;
+    color: var(--text-color); /* Use secondary color for text */
+    background-color: var(--body-background-color);
+    margin: 0; /* Remove default margin */
+    padding: 0; /* Remove default padding */
+    overflow-x: hidden; /* Prevent horizontal scrolling */
+}
+
+/* Main content (Column 2) */
+.main-content {
+    flex: 1; /* Take up remaining space */
+    padding: 20px;
+    margin-left: 250px; /* Adjusted margin left to accommodate sidebar width */
+}
+
 /* Sidebar */
 .side-nav {
-    position: fixed;
-    top: 20;
-    left: 20;
-    width: 210px;
-    height: 100%;
-    background-color: #333;
-    color: #fff;
-    padding-top: 0px;
-	display: flex; /* Use flexbox */
+    width: 250px;
+    height: 100vh; /* Full height */
+    background-color: var(--side-color); /* Use primary color for background */
+    color: var(--text-color); /* Use secondary color for text */
+    display: flex; /* Use flexbox */
     flex-direction: column; /* Stack items vertically */
     align-items: center; /* Center items horizontally */
+    position: fixed; /* Fix sidebar position */
+    top: 0; /* Position from the top */
+    left: 0; /* Position from the left */
 }
 
-.side-nav ul {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-}
+    .side-nav ul {
+        list-style-type: none;
+        padding: 0;
+        width: 100%;
+        margin: 0;
+    }
 
-.side-nav ul li {
-    padding: 10px;
-    text-align: center;
-}
+        .side-nav ul li {
+            padding: 10px;
+            text-align: center;
+            transition: background-color 0.3s;
+        }
 
-.side-nav ul li a {
-    color: #fff;
-    text-decoration: none;
-}
+            .side-nav ul li a {
+                color: var(--secondary-color); /* Use secondary color for link text */
+                text-decoration: none;
+                display: block;
+            }
 
-.side-nav ul li a:hover {
-    text-decoration: underline;
-}
+            .side-nav ul li:hover {
+                background-color: var(--hover-color); /* Use hover color for background on hover */
+                color: #f6f6f6;
+            }
 
 /* Cover Image */
 .cover-image img {
-    width: 100%; /* Adjust the width to 100% of its container */
-	justify-content: center; /* Center items horizontally */
+    width: 100%;
+    justify-content: center; /* Center items horizontally */
     align-items: center; /* Center items vertically */
 }
 
-/* Main Content */
-.main-content {
-    margin-left: 200px; /* Same width as the sidebar */
-    padding: 20px;
-}
-
+/* Header */
 header {
-    background-color: #333;
-    color: #fff;
+    background-color: var(--side-color);
+    color: var(--secondary-color);
     padding: 20px;
     text-align: left;
-    margin-bottom: 20px;
+    position: fixed; /* Fix header position */
+    top: 0; /* Position from the top */
+    left: 250px; /* Account for sidebar width */
+    width: calc(100% - 250px); /* Adjust width to fit remaining space */
 }
 
+/* Footer */
 footer {
-    background-color: #333;
-    color: #fff;
+    background-color: var(--side-color);
+    color: var(--secondary-color);
     text-align: center;
     padding: 20px;
-    position: fixed;
-    bottom: 0;
-    width: 100%;
+    position: fixed; /* Fix footer position */
+    bottom: 0; /* Position from the bottom */
+    left: 250px; /* Account for sidebar width */
+    width: calc(100% - 250px); /* Adjust width to fit remaining space */
 }
