@@ -27,8 +27,16 @@ seo:
   description: A collection of things I do for a living and for fun.
   image: /assets/images/cover.jpg
   lang: en_US
- 
-include:
-  - _pages
+
+plugins:
+  - jekyll-paginate
+
 # Pagination
-paginate: 5
+#include:
+#  - _pages
+#paginate: 5
+
+
+# Silence deprecation warnings
+sass:
+  quiet_deps: true
