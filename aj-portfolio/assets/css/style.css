@@ -9,6 +9,7 @@
 
 .container {
     display: flex; /* Use flexbox */
+    justify-content: center; /* Center content horizontally */
 }
 
 /* Main */
@@ -16,7 +17,8 @@ body {
     font-family: "MyFont", monospace;
     color: var(--text-color); /* Use secondary color for text */
     background-color: var(--body-background-color);
-    margin: 0; /* Remove default margin */
+    margin-left: 200px; /* Remove default margin */
+    margin-right: 200px; /* Remove default margin */
     padding: 0; /* Remove default padding */
     overflow-x: hidden; /* Prevent horizontal scrolling */
 }
@@ -38,8 +40,7 @@ body {
     flex-direction: column; /* Stack items vertically */
     align-items: center; /* Center items horizontally */
     position: fixed; /* Fix sidebar position */
-    top: 0; /* Position from the top */
-    left: 0; /* Position from the left */
+
 }
 
     .side-nav ul {
@@ -77,12 +78,13 @@ body {
 header {
     background-color: var(--side-color);
     color: var(--secondary-color);
-    padding: 20px;
-    text-align: left;
+    padding: 0px;
+    font-size: 12px;
+    text-align:center;
     position: fixed; /* Fix header position */
-    top: 0; /* Position from the top */
-    left: 250px; /* Account for sidebar width */
-    width: calc(100% - 250px); /* Adjust width to fit remaining space */
+    top: 7px; /* Position from the top */
+    left: 450px; /* Account for sidebar width */
+    width: calc(100% - 650px); /* Adjust width to fit remaining space */
 }
 
 /* Footer */
@@ -90,11 +92,12 @@ footer {
     background-color: var(--side-color);
     color: var(--secondary-color);
     text-align: center;
-    padding: 20px;
+    padding: 5px;
     position: fixed; /* Fix footer position */
     bottom: 0; /* Position from the bottom */
     left: 250px; /* Account for sidebar width */
-    width: calc(100% - 250px); /* Adjust width to fit remaining space */
+    width: calc(100% - 500px); /* Adjust width to fit remaining space */
+    font-size: 12px;
 }
 
 

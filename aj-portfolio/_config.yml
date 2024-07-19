@@ -31,9 +31,10 @@ seo:
 plugins:
   - jekyll-paginate
 
+
+include:
+- _pages
 # Pagination
-#include:
-#  - _pages
 #paginate: 5
 
 
