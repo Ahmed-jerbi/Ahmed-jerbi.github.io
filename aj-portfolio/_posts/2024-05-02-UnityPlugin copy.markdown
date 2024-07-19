@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Welcome to Jekyll!"
+title:  "Unity Plugin"
 date:   2024-05-02 22:31:34 +0200
 categories: jekyll update
 thumbnail: /assets/images/hdrp.png

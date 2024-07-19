@@ -2,10 +2,7 @@
 layout: default
 title: Portfolio
 ---
-## Posts
 
-<div class="home">
-  <h1>Welcome to My Blog</h1>
   <div class="post-grid">
     {% for post in site.posts %}
       <div class="post-box">
@@ -16,4 +13,3 @@ title: Portfolio
       </div>
     {% endfor %}
   </div>
-</div>
