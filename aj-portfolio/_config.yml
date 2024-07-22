@@ -21,6 +21,8 @@ feed:
   path: feed.xml
   posts_limit: 10
 
+include: ["Hosted_apps"]
+
 # Jekyll SEO Tag plugin settings
 seo:
   title: Ahmed Jerbi

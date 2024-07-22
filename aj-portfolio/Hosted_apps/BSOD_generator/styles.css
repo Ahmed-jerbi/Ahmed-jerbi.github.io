@@ -1,0 +1,138 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #0050A0;
+}
+
+.box {
+    background-color: #0050A0;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    margin: 20px;
+    width: 400px;
+}
+
+#controls {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#controls label {
+    color: #FFFFFF;
+    margin-top: 10px;
+    margin-bottom: 5px;
+    align-self: flex-start;
+}
+
+#controls h1 {
+    color: #FFD700; 
+    font-size: 24px; 
+}
+
+textarea {
+    resize: none;
+}
+
+#controls input, #controls button, #controls textarea {
+    margin: 10px 0;
+    width: 100%;
+	background-color: #0050A0;
+	color:#FFFFFF;
+    border: 1px solid #FFFFFF;
+}
+
+#controls button {
+    padding: 10px;
+    font-size: 16px;
+	background-color: #0050A0;
+	color: #FFFFFF;
+	border: 1px solid #FFFFFF;
+	transition: background-color 0.3s, box-shadow 0.3s;	
+}
+
+#controls button:hover {
+	background-color: #00a745;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.button-row {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-between;
+}
+
+#wallpaper {
+    position: relative;
+    width: 90vw;
+    max-width: 1920px;
+    height: 90vh;
+    max-height: 1080px;
+    background-color: #0050A0;
+    color: #FFFFFF;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 20px;
+    box-sizing: border-box;
+    border: none;
+}
+
+#wallpaper p {
+    margin: 10px 0;
+    text-align: left;
+}
+
+.error-icon {
+    font-size: 150px;
+    text-align: left;
+}
+
+.main-text, .progress-text {
+    font-size: 30px;
+    text-align: left;
+}
+
+#mainText {
+    font-size: 24px;
+    text-align: left;
+}
+
+.qr-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.qr-code {
+    width: 150px;
+    height: 150px;
+    background-size: contain;
+    margin-right: 20px;
+}
+
+.link-text-small {
+    font-size: 14px;
+    text-align: left;
+}
+
+.hidden {
+    display: none;
+}
+
+
+.info-text {
+    font-size: 10px;
+    color: #8b8a8a;
+    text-align: center;
+    margin-top: 10px;
+}

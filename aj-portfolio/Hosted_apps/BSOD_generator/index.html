@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blue Screen Wallpaper Generator</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="controls" class="box">
+        <h1>Blue Screen Wallpaper Generator</h1>
+        <label for="mainTextInput">Error Text</label>
+        <textarea id="mainTextInput" placeholder="Enter main text" rows="4">Your PC ran into a problem and needs to restart. We're just collecting some error info, and then we'll restart for you.</textarea>
+        <label for="qrLinkInput">QR Code Link</label>
+        <input type="text" id="qrLinkInput" placeholder="Enter link for QR code" value="https://www.youtube.com/watch?v=dQw4w9WgXcQ" />
+        <button onclick="generateWallpaper()">Update</button>
+        <div class="button-row">
+            <button onclick="downloadImage()">Download Image</button>
+            <button onclick="toggleFullScreen()">Go Fullscreen</button>
+        </div>
+        <p class="info-text">© source code: https://github.com/Ahmed-jerbi.</p>
+    </div>
+    <div id="wallpaper">
+        <div class="error-icon">:(</div>
+        <p id="mainText" class="main-text">Your PC ran into a problem and needs to restart. We're just collecting some error info, and then we'll restart for you.</p>
+        <p class="progress-text">50% complete</p>
+        <div class="qr-container">
+            <div class="qr-code" id="qrCode"></div>
+            <div class="text-container">
+                <p class="link-text-small">For more information about this issue and possible fixes, visit <a href="https://www.windows.com/stopcode" style="color: #FFFFFF;">https://www.windows.com/stopcode</a></p>
+                <p class="link-text-small">If you call support, give them this info:<br>Stop code: CRITICAL_PROCESS_DIED</p>
+            </div>
+        </div>
+		
+    </div>
+    <canvas id="canvas" width="1920" height="1080" class="hidden"></canvas>
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.0.0-rc.5/dist/html2canvas.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
