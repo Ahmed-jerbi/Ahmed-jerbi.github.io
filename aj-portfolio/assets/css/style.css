@@ -1,10 +1,10 @@
 /* Define color palette */
 :root {
-    --primary-color: #868686; /* Primary color */
+    --primary-color: #e3e3e3; /* Primary color */
     --text-color: #000000; /* Secondary color */
     --hover-color: #a91111; /* Hover color */
     --body-background-color: #f6f6f6;
-    --side-color: #d1d0d0;
+    --side-color: #f2f2f2;
 }
 
 .container {
@@ -29,8 +29,10 @@ body {
 .main-content {
     flex: 1; /* Take up remaining space */
     padding: 20px;
-    margin-top: 70px;
+    margin-top: 1px;
     margin-left: 350px; /* Adjusted margin left to accommodate sidebar width */
+    border-top: 2px solid var(--text-color); /* Top black bar */
+    border-bottom: 2px solid var(--text-color); /* Bottom black bar */
 }
 
 /* Sidebar */
@@ -44,6 +46,8 @@ body {
     align-items: center; /* Center items horizontally */
     position: fixed; /* Fix sidebar position */
     font-size:larger;
+    border-top: 2px solid var(--text-color); /* Top black bar */
+    padding: 25px 10px 0px 10px;
 
 }
 
@@ -114,6 +118,7 @@ footer {
     left: 350px; /* Account for sidebar width */
     width: calc(100% - 650px); /* Adjust width to fit remaining space */
     font-size: 12px;
+    border-top: 2px solid var(--text-color); /* Top black bar */
 }
 
   /* post box */
