@@ -1,5 +1,5 @@
 ---
 layout: default
-title: Home
+title: Ahmed Jerbi
 paginate: false
 ---
