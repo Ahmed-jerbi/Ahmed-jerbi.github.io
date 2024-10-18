@@ -27,7 +27,8 @@ body {
 
 /* Main content (Column 2) */
 .main-content {
-    flex: 1; /* Take up remaining space */
+  width: 950px;  
+  flex: 1; /* Take up remaining space */
     padding: 20px;
     margin-top: 1px;
     margin-left: 350px; /* Adjusted margin left to accommodate sidebar width */
@@ -45,7 +46,7 @@ body {
     flex-direction: column; /* Stack items vertically */
     align-items: center; /* Center items horizontally */
     position: fixed; /* Fix sidebar position */
-    font-size:larger;
+    font-size:large;
     border-top: 2px solid var(--text-color); /* Top black bar */
     padding: 25px 10px 0px 10px;
 
@@ -76,8 +77,8 @@ body {
             }
             
             .side-nav p{
-                font-size: 16px; /* size of the intro text */
-                padding: 15px;
+                font-size: 14px; /* size of the intro text */
+                padding: 5px;
                 color: #555555;
             }
 
@@ -115,9 +116,9 @@ footer {
     padding: 5px;
     position: fixed; /* Fix footer position */
     bottom: 0; /* Position from the bottom */
-    left: 350px; /* Account for sidebar width */
+    left: 300px; /* Account for sidebar width */
     width: calc(100% - 650px); /* Adjust width to fit remaining space */
-    font-size: 12px;
+    font-size: 10px;
     border-top: 2px solid var(--text-color); /* Top black bar */
 }
 

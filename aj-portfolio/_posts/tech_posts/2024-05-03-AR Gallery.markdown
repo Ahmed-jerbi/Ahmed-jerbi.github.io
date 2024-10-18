@@ -1,30 +1,23 @@
 ---
 layout: post
-title:  "AR Gallery"
-date:   2024-05-02 22:31:34 +0200
+title:  "AR Election Data"
+date:   2019-09-02 22:31:34 +0200
 categories: tech 
 thumbnail: /assets/images/ARbook.jpg
 ---
-You’ll find this post in your `_posts` directory. Go ahead and edit it and re-build the site to see your changes. You can rebuild the site in many different ways, but the most common way is to run `jekyll serve`, which launches a web server and auto-regenerates your site when a file is updated.
+# Augmented Election Data
+For Democracy International - www.democracyinternational.com
 
-Jekyll requires blog post files to be named according to the following format:
 
-`YEAR-MONTH-DAY-title.MARKUP`
+Augmenting a booklet summarizing Tunisian 2019 election results in an interactive 3D data visualisation. 
 
-Where `YEAR` is a four-digit number, `MONTH` and `DAY` are both two-digit numbers, and `MARKUP` is the file extension representing the format used in the file. After that, include the necessary front matter. Take a look at the source for this post to get an idea about how it works.
+A project in collaboration with [Rafaa Seddik](https://www.behance.net/rafaaseddik)
 
-Jekyll also offers powerful support for code snippets:
+Download the Android application [.apk via this link](https://drive.google.com/open?id=1eobFTyXPp3xZlcncE_DbqqNN283rWIPe)
 
-{% highlight ruby %}
-def print_hi(name)
-  puts "Hi, #{name}"
-end
-print_hi('Tom')
-#=> prints 'Hi, Tom' to STDOUT.
-{% endhighlight %}
+Tools: Unity, ARCore, Vuforia SDK
 
-Check out the [Jekyll docs][jekyll-docs] for more info on how to get the most out of Jekyll. File all bugs/feature requests at [Jekyll’s GitHub repo][jekyll-gh]. If you have questions, you can ask them on [Jekyll Talk][jekyll-talk].
-
-[jekyll-docs]: https://jekyllrb.com/docs/home
-[jekyll-gh]:   https://github.com/jekyll/jekyll
-[jekyll-talk]: https://talk.jekyllrb.com/
+<img src="/assets/images/ARbook.jpg"  height="350"/>
+<img src="/assets/images/AR2.jpg"  height="350"/>
+<img src="/assets/images/AR3.jpg"  height="350"/>
+<img src="/assets/images/AR4.png"  height="350"/>

@@ -14,7 +14,7 @@ Documenting the Journey of Inspire National Dance Competition, from its creation
 ### Description
 My first solo project for my documentary film-making class and internship in the company [Inspire NDC](https://inspirendc.com/).
 - Filming: performances and interviews in Florida, Georgia, Alabama, Virginia, South & North Carolina
-  - Camera: Olympus OM-D E-M1 Mark III 4k 
+  - Camera: Olympus OM-D E-M1 Mark III 4k + Canon XA60
   - Microphone: Zoom H1n 
 - Editing: Adobe Premiere Pro, Adobe Audition.
 
@@ -23,6 +23,6 @@ My first solo project for my documentary film-making class and internship in the
 
 ### Behind the scenes
 
-<img src="/assets/images/videography/Inspire.jpg"  width="550"/>
-<img src="/assets/images/videography/Inspire2.jpg"  width="550"/>
-<img src="/assets/images/videography/Inspire3.jpg"  width="550"/>
+<img src="/assets/images/videography/Inspire.jpg"  height="350"/>
+<img src="/assets/images/videography/Inspire2.jpg"  height="350"/>
+<img src="/assets/images/videography/Inspire3.jpg"  height="350"/>
