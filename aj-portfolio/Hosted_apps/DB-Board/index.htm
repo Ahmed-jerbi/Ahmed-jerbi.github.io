@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DB Home Dashboard | AJ</title>
+    <link rel="icon" href="LogoDB-Board.png" type="image/png">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+  <div class="header">
+    <img src="LogoDB-Board.png" alt="App Icon" class="app-icon">
+    <h1>DB Home Dashboard</h1>
+    <div id="time"></div>
+  </div>
+
+    <div class="dashboard">
+        <div class="row">
+            <div class="station-name">Düsselstrand 706 + Bus 738</div>
+            <div class="iframe-container">
+                <iframe src="http://haltestellenmonitor.vrr.de/monitor/8eeedd1695bbd96ddbe5d409b08a2d1d"></iframe>
+            </div>
+        </div>
+        <div class="row">
+            <div class="station-name">Kettwiger Ubahn</div>
+            <div class="iframe-container">
+                <iframe src="http://haltestellenmonitor.vrr.de/monitor/d1b55e054c27e3881224913f6d61a262"></iframe>
+            </div>
+        </div>
+        <div class="row">
+            <div class="station-name">Fligern S</div>
+            <div class="iframe-container">
+                <iframe src="http://haltestellenmonitor.vrr.de/monitor/a9ca6eb286dc918a7375f6455f8f8830"></iframe>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+      <p>&copy; Source code:<a href="https://github.com/Ahmed-jerbi" target="_blank">github.com/Ahmed-jerbi</a> - Data: <a href="https://haltestellenmonitor.vrr.de/" target="_blank">VRR.de</a></p>
+      
+  </footer>
+
+  <!-- time script-->
+    <script>
+      function updateTime() {
+          const timeElement = document.getElementById("time");
+          const now = new Date();
+          timeElement.textContent = now.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+      }
+      setInterval(updateTime, 1000);
+      updateTime();
+  </script>
+</body>
+</html>
