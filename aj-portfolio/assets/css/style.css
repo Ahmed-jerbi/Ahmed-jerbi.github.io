@@ -82,10 +82,23 @@ body {
                 color: #555555;
             }
 
-.name-title{
- font-size: 24px; /* size of the intro text */
- padding-top: 15px;
-}
+            .name-title  {
+              font-size: 24px; /* size of the intro text */
+              padding-top: 15px;
+            }
+            
+            .name-title a {
+              font-size: 24px; /* size of the intro text */
+              padding-top: 15px;
+              text-decoration: none; /* removes underline */
+              color: inherit; /* matches the parent text color or specify a color like #000 */
+            }
+            .name-title a:hover {
+              text-decoration: underline; /* underline appears on hover */
+              text-decoration-color: var(--hover-color); /* change the underline color */
+              text-decoration-thickness: 2px;
+
+            }
 
 
 /* Cover Image */
@@ -134,13 +147,15 @@ footer {
   }
   
   .post-date {
-    font-weight: bold;
-    margin-right: 10px;
+    font-weight:lighter;
+    font-size:8px;
+    text-align: center;
+    margin-bottom: 5px;
   }
   
   .post-link {
     text-decoration: none;
-    color: #007acc;
+    color: #006f52;
 
   }
   
@@ -153,12 +168,13 @@ footer {
   .post-box {
     width: 280px;
     border: 1px solid #ddd;
-    padding: 10px;
+    padding: 1px;
     transition: transform 0.2s;
   }
   
   .post-box:hover {
     transform: scale(1.05);
+    background-color:#e9f1ed;
   }
   
   .post-title {
@@ -170,7 +186,7 @@ footer {
   
   .post-box img {
     width: 100%;
-    height: auto;
-    border-radius: 5px;
+    height:auto;
+    border-radius: 0px;
   }
 
