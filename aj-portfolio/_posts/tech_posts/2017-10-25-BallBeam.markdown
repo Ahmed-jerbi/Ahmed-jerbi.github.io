@@ -1,0 +1,31 @@
+---
+layout: post
+title:  "Ball & Beam |  PID Mechanical Mockup"
+date:   2017-10-25 22:31:34 +0200
+categories: tech
+thumbnail: /assets/images/PID.png
+---
+
+
+# Ball & Beam |  PID Mechanical Mockup
+University project for Proportional–integral–derivative controllers class.
+
+_________________________________
+
+Give the ball a push and the system will automatically regulate the beam to stabilize its position.
+
+The real-time position is rendered in a Labview graph.
+
+
+### Tools:
+
++ labVIEW (National Instruments)
++ Arduino
++ Ultrasonic Transducer
++ Servo Motor
+
+
+<img src="/assets/images/PID.png"  height="300"/>
+
+Demo Video:
+<iframe width="500" height="282" src="https://www.youtube.com/embed/XjREwxvFvzI"  frameborder="0" allow=" picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
