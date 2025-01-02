@@ -1,0 +1,37 @@
+---
+layout: post
+title:  "VR Voting |  Tunisian Elections, 2019"
+date:   2019-01-10 22:31:34 +0200
+categories: tech
+thumbnail: /assets/images/VR-voting.png
+---
+
+
+# VR Voting |  Tunisian Elections, 2019
+Educational Virtual Reality Experience for Democracy International - [www.democracyinternational.com](www.democracyinternational.com)
+
+_________________________________
+
+This game aims to educate youth on the voting process by walking them through the different steps of an election day in Tunisia. 
+
+Players can interact with various elements of the environment (Ballot, Pen, ID Card..) to unlock the next steps.
+
+Using Unity 3D, Steam VR sdk, HTC Vive.
+
++ VR Application Developer: Ahmed Jerbi
++ 3D Designer: Raed Ghanja 
+
+____________________________________________________
+
+
+### Tools:
+
++ Unity 3D
++ SteamVR SDK, HTC Vive
++ C#
+
+
+<img src="/assets/images/vr-voting2.png"  height="300"/>
+<img src="/assets/images/vr-voting3.png"  height="300"/>
+
+<iframe width="500" height="282" src="https://www.youtube.com/embed/XJ9zLxOjQNU" title="Voting in VR | Tunisian Elections, 2019." frameborder="0" allow=" picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>

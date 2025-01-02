@@ -27,8 +27,8 @@ body {
 
 /* Main content (Column 2) */
 .main-content {
-  width: 950px;  
-  flex: 1; /* Take up remaining space */
+  width: 1050px;  
+  flex: 0; /* Take up remaining space */
     padding: 20px;
     margin-top: 1px;
     margin-left: 350px; /* Adjusted margin left to accommodate sidebar width */
