@@ -1,4 +1,4 @@
-/* Define color palette */
+/* Color palette */
 :root {
     --primary-color: #e3e3e3; /* Primary color */
     --text-color: #000000; /* Secondary color */
@@ -15,7 +15,7 @@
 /* Main */
 body {
     font-family: "MyFont", 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-    font-size:large;
+    font-size:medium;
     color: var(--text-color); /* Use secondary color for text */
     background-color: var(--body-background-color);
     margin-left: 300px; /* Remove default margin */

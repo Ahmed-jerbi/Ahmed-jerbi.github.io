@@ -4,20 +4,24 @@ title: About
 ---
 # About Me
 
-Hello, my name is Ahmed Jerbi.
-This blog is a collection of some of my personal and professional projects.
+Hello, I'm Ahmed Jerbi!
+This is a space where I share the stuff I’ve done, whether it’s work-related, fun personal projects, or just somethings I’m excited about. 
 
 ______________________________________________
 
-Software Integration Engineer @VIOSO, Germany.
+### Current Role
+- **Software Engineer @VIOSO, Germany.**\
+I help build cool tech solutions for the world's leader in computer vision for projection mapping. Working on projects around the globe and creating visual systems for media, audiovisual and simulation clients.
 
-Industrial Software Engineering graduate @INSAT, Tunisia
+### Education
+- The hard part: **Industrial Software Engineering graduate @INSAT, Tunisia**
 
-Business & Marketing graduate @CCGA, USA
+- The cool part: **Business & Marketing graduate @CCGA, USA** \
+    Awarded the Thomas Jefferson Scholarship to study in the United States and achieved a double major in Business and Engineering.
 
 ______________________________________________
 
-### CONTACT
+### Let's Connect
 
 <!-- Mail -->
 <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 20px;">
