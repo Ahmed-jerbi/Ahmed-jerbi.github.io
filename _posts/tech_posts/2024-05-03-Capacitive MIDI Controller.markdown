@@ -3,7 +3,7 @@ layout: post
 title:  "Capacitive MIDI Controller"
 date:   2017-05-02 22:31:34 +0200
 categories: tech music
-thumbnail: /assets/images/MIDI.jpg
+thumbnail: /assets/images/Midi.jpg
 ---
 # DIY Midi Controller with Capacitive Touch
 
