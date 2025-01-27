@@ -49,7 +49,7 @@ body {
     align-items: center; /* Center items horizontally */
     font-size:large;
     border-top: 2px solid var(--text-color); /* Top black bar */
-    padding: 25px 10px 0px 10px;
+    padding: 20px 10px 0px 10px;
 
 }
 
@@ -121,7 +121,7 @@ header {
     font-size: 12px;
     text-align: center;
     position: absolute;
-    top: 20px;
+    top: 0px;
     left: 50%; /* Account for sidebar width */
     width: 20%;
 }
@@ -148,13 +148,6 @@ footer {
   
   .post-list li {
     margin-bottom: 10px;
-  }
-  
-  .post-date {
-    font-weight:lighter;
-    font-size:8px;
-    text-align: center;
-    margin-bottom: 5px;
   }
   
   .post-link {
@@ -184,13 +177,42 @@ footer {
   .post-title {
     font-size:medium;
     font-weight: bold;
-    margin-top: 10px;
+    padding: 2px;
     text-align: center;
+  }
+
+  .post-date {
+    font-weight:lighter;
+    font-size:8px;
+    text-align: center;
+    margin-bottom: 2px;
   }
   
   .post-box img {
     width: 100%;
-    height:fit-content;
-    border-radius: 0px;
+    height:17vh;
+    object-fit: cover;
   }
 
+  /* Mobile specific */
+
+  @media (max-width: 768px) { 
+    body {
+      margin-left:0%; 
+      margin-right:0%; 
+    }
+    .side-nav {
+      width: 28%;
+    }
+    .main-content {
+      margin-left: 30%; 
+    } 
+    
+    .post-box img {
+        height: 7vh; /* Smaller height for mobile devices */
+    }
+
+    .post-title {
+      font-size: small; /* Smaller font size for mobile devices */
+  }
+}
