@@ -11,12 +11,12 @@ ______________________________________________
 
 ### Current Role
 - **Software Engineer @VIOSO, Germany.**\
-I help build cool tech solutions for the world's leader in computer vision for projection mapping. Working on projects around the globe and creating visual systems for media, audiovisual and simulation clients.
+I help build tech solutions for the world's leader in computer vision for projection mapping. Working on projects around the globe and creating visual systems for media, audiovisual and simulation clients.
 
 ### Education
 - The hard part: **Industrial Software Engineering graduate @INSAT, Tunisia**
 
-- The cool part: **Business & Marketing graduate @CCGA, USA** \
+- The fun part: **Business & Marketing graduate @CCGA, USA** \
     Awarded the Thomas Jefferson Scholarship to study in the United States and achieved a double major in Business and Engineering.
 
 ______________________________________________

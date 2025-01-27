@@ -19,7 +19,7 @@ My first solo project for my documentary film-making class and internship in the
 - Editing: Adobe Premiere Pro, Adobe Audition.
 
 
-<iframe width="1100" height="550" src="https://www.youtube.com/embed/Ktu8qUkUFps" title="Inspire National Dance Competition - A Short Documentary (2019)" frameborder="10" allow="accelerometer; autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+<iframe width="100%" height="350" src="https://www.youtube.com/embed/Ktu8qUkUFps" title="Inspire National Dance Competition - A Short Documentary (2019)" frameborder="10" allow="encrypted-media; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
 ### Behind the scenes
 
