@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Unity Plugin"
+title:  "Unity VIOSO Projection Mapping Plugin"
 date:   2020-02-02 22:31:34 +0200
 categories: tech
 thumbnail: /assets/images/unityThumbnail.jpg

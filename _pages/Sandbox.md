@@ -3,7 +3,7 @@ layout: default
 title: Sandbox
 ---
 # Sandbox
-A space where I host my web applications and playground for experiments.
+A space where I host some playground web apps.
 
 - [DB-Board](/sandbox/DB-Board/index.htm)
   

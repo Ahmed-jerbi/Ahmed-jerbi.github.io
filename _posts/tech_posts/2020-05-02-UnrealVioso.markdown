@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Unreal VIOSO Integration"
+title:  "Unreal Engine - nDisplay VIOSO Projection"
 date:   2020-06-02 22:31:34 +0200
 categories: tech
 thumbnail: /assets/images/UnrealVIOSO.gif
