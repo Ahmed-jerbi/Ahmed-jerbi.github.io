@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Sandbox
+title: AJ |  Sandbox
 ---
 # Sandbox
 A space where I host some playground web apps.

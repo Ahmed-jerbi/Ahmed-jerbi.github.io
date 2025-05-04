@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Videography
+title: AJ | Videography
 ---
 # Videography
 

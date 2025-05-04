@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Music
+title: AJ | Music
 ---
 # Music
   <div class="post-grid">

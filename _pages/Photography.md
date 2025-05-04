@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Portfolio
+title: AJ | Photography
 ---
 ## Photography 
 ### My 500px profile : [500px.com/p/ahmed_jerbi](500px.com/p/ahmed_jerbi)

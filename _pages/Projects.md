@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Portfolio
+title: AJ | Engineering
 ---
 
   <div class="post-grid">
