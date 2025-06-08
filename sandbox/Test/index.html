@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>VRR Departures - Gelsenkirchen Hbf</title>
+  <style>
+    body { font-family: sans-serif; padding: 20px; }
+    table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+    th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
+    th { background-color: #eee; }
+  </style>
+</head>
+<body>
+  <h1>Departures – Gelsenkirchen Hbf</h1>
+  <table id="departureTable">
+    <thead>
+      <tr><th>Line</th><th>Direction</th><th>Time</th><th>Realtime</th></tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <script>
+    const url = 'https://openservice-test.vrr.de/openservice/XML_DM_REQUEST?outputFormat=JSON&version=10.4.18.18&place_dm=Gelsenkirchen&placeState_dm=empty&type_dm=stop&name_dm=Hbf&mode=direct&useRealtime=1';
+
+    fetch(url)
+      .then(res => res.json())
+      .then(data => {
+        const departures = data?.departureList || [];
+        const tbody = document.querySelector('#departureTable tbody');
+        tbody.innerHTML = '';
+
+        departures.forEach(dep => {
+          const tr = document.createElement('tr');
+          tr.innerHTML = `
+            <td>${dep.servingLine.number}</td>
+            <td>${dep.servingLine.direction}</td>
+            <td>${dep.departureTime.hour}:${dep.departureTime.minute.toString().padStart(2, '0')}</td>
+            <td>${dep.realtimeStatus || 'planned'}</td>
+          `;
+          tbody.appendChild(tr);
+        });
+      })
+      .catch(err => {
+        console.error('Failed to load departures:', err);
+      });
+  </script>
+</body>
+</html>
