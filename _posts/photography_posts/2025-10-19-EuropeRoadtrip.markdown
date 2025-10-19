@@ -2,8 +2,8 @@
 layout: post
 title:  "Europe Road Trip | 2025"
 date:   2025-10-18 22:31:34 +0200
-categories: photography
-thumbnail: /assets/images/photography/roadtrip25-car.jpg
+categories: photography hidden
+thumbnail: /assets/images/photography/roadtrip25-map.jpg
 ---
 
 
