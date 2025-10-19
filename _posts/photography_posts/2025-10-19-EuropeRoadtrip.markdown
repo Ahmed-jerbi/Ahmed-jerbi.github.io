@@ -10,14 +10,11 @@ thumbnail: /assets/images/photography/roadtrip25-car.jpg
 # Europe Road Trip | 2025
 
 <div style="display: flex; gap: 5px;">
-  <img src="/assets/images/photography/roadtrip25-car.jpg" height="350">
-  <img src="/assets/images/photography/roadtrip25.jpg" height="350">
+  <img src="/assets/images/photography/roadtrip25-van.jpg" height="350">
+  <img src="/assets/images/photography/roadtrip25-map.jpg" height="350">
 </div>
 - 14 days through Germany, Belgium, France, Switzerland, Italy
 - Campervan VW California Ocean T6.1
-  
-  <img src="/assets/images/photography/roadtrip25-car.jpg" height="350">
-  <img src="/assets/images/photography/roadtrip25.jpg" height="350">
 
 
 ## <a href="https://trips.furkot.com/ts/tbTauz">Full Itinerary details below on Furkot</a>
