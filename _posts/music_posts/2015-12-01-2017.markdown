@@ -1,0 +1,16 @@
+---
+layout: post
+title:  "2017"
+date:   2017-03-23 22:31:34 +0200
+categories: music
+thumbnail: /assets/images/music/GIF2017.gif
+---
+# 2017 | INSAT
+Live music performance [@CineRadio, INSAT](https://www.facebook.com/Cineradioinsat)
+
+__________________________________________
+
+
+<img src="/assets/images/music/GIF2017.gif"  height="370"/>
+<img src="/assets/images/music/GIF2017.jpg"  height="370"/>
+<img src="/assets/images/music/2017.jpg"  height="370"/>

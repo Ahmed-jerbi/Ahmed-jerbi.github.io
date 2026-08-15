@@ -48,6 +48,7 @@ GEM
       jekyll-seo-tag (~> 2.0)
     jekyll-watch (2.2.1)
       listen (~> 3.0)
+    jekyll-webp (1.0.0)
     kramdown (2.4.0)
       rexml
     kramdown-parser-gfm (1.1.0)
@@ -95,6 +96,7 @@ DEPENDENCIES
   jekyll-feed (~> 0.12)
   jekyll-paginate
   jekyll-theme-minimal
+  jekyll-webp
   minima (~> 2.5)
   tzinfo (>= 1, < 3)
   tzinfo-data

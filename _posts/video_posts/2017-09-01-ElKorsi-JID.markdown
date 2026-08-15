@@ -17,11 +17,16 @@ Simultaneously, A 3D miniature city projection was looping at the auditorium. Wa
 Shot by: [Mohsen Bchir](https://onoff.tasawar.net/mohsen-bchir-2/)
 
 Location: Institut Français de Tunis.
+References: 
+- [https://democracyinternational.tumblr.com/post/166712501972/combining-art-and-data-to-support-tunisias-first](https://democracyinternational.tumblr.com/post/166712501972/combining-art-and-data-to-support-tunisias-first)
+- [https://www.youtube.com/watch?v=yaHDbPP5VJM&t=1s](https://www.youtube.com/watch?v=yaHDbPP5VJM&t=1s)
 
 ### Tools
 - Projection Mapping: Resolume Arena.
 - Animations: Adobe After Effects, Premiere, PS, Audition.
 
-
 <iframe width="100%" height="350" src="https://www.youtube.com/embed/786Ffgju98Y" title="El Korsi - Projection Mapping" frameborder="10" allow="encrypted-media; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+<img src="/assets/images/videography/JID2.webp"  height="300"/>
+<img src="/assets/images/videography/JID3.webp"  height="300"/>
 

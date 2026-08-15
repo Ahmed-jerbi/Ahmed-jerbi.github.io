@@ -31,7 +31,7 @@ ____________________________________________________
 + C#
 
 
-<img src="/assets/images/vr-voting2.png"  height="300"/>
 <img src="/assets/images/vr-voting3.png"  height="300"/>
+<img src="/assets/images/VR-voting2.png"  height="300"/>
 
 <iframe width="500" height="282" src="https://www.youtube.com/embed/XJ9zLxOjQNU" title="Voting in VR | Tunisian Elections, 2019." frameborder="0" allow=" picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
