@@ -3,7 +3,7 @@ layout: post
 title:  "Halloween Short Movie "
 date:   2016-10-02 11:31:34 +0200
 categories: video
-thumbnail: /assets/images/videography/Halloween.jpg
+thumbnail: /assets/images/videography/halloween.jpg
 ---
 # Halloween Short Movie: ليلة في الانسات  | On campus
 Insat, 2026
