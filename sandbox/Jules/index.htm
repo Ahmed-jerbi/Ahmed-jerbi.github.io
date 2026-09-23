@@ -4,277 +4,228 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Bienvenue Jules</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Inter:wght@300;400&display=swap" rel="stylesheet">
-
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-body {
-  margin: 0;
-  font-family: 'Inter', sans-serif;
-  background: linear-gradient(180deg, #f7f5f2, #ffffff);
-  color: #333;
-  overflow-x: hidden;
-}
-
-.hero {
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  flex-direction: column;
-  padding: 20px;
-  animation: fadeIn 2s ease;
-}
-
-.hero h1 {
-  font-family: 'Playfair Display', serif;
-  font-size: 2.8rem;
-  margin-bottom: 10px;
-}
-
-.hero p {
-  opacity: 0.7;
-}
-
-.scroll {
-  margin-top: 40px;
-  font-size: 0.9rem;
-  opacity: 0.5;
-}
-
-/* Timeline */
-.timeline {
-  position: relative;
-  max-width: 700px;
-  margin: 0 auto;
-  padding: 80px 20px;
-}
-
-.timeline::before {
-  content: '';
-  position: absolute;
-  left: 20px;
-  top: 0;
-  bottom: 0;
-  width: 1px;
-  background: #cfcfcf;
-  border-radius: 2px;
-}
-
-.event {
-  position: relative;
-  margin-bottom: 60px;
-  opacity: 0;
-  transform: translateY(40px);
-  transition: all 0.8s ease;
-  padding-left: 60px;
-}
-
-.event.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.event::before {
-  content: '';
-  position: absolute;
-  left: 22px;
-  top: 5px;
-  width: 10px;
-  height: 10px;
-  background: #076134;
-  border-radius: 50%;
-  border: 2px solid #fff;
-  box-shadow: 0 0 0 2px #076134;
-}
-
-.event h3 {
-  font-family: 'Playfair Display', serif;
-  margin-bottom: 8px;
-}
-
-.event span {
-  font-size: 0.85rem;
-  opacity: 0.6;
-}
-
-.event p {
-  margin-top: 5px;
-}
-
-.thumbnail {
-  margin-top: 8px;
-  width: 100px;
-  height: 60px;
-  object-fit: cover;
-  cursor: pointer;
-  border-radius: 4px;
-  border: 1px solid #ccc;
-}
-
-/* Modal */
-.modal {
-  display: none;
-  position: fixed;
-  z-index: 999;
-  left: 0; top: 0;
-  width: 100%; height: 100%;
-  background: rgba(0,0,0,0.7);
-  align-items: center;
-  justify-content: center;
-}
-
-.modal-content {
-  background: #fff;
-  padding: 20px;
-  max-width: 80%;
-  max-height: 80%;
-  border-radius: 8px;
-  text-align: center;
-  overflow: auto;
-}
-
-.modal-content img, .modal-content video {
-  max-width: 100%;
-  max-height: 70vh;
-  border-radius: 6px;
-}
-
-.modal-close {
-  position: absolute;
-  top: 15px;
-  right: 20px;
-  font-size: 1.5rem;
-  cursor: pointer;
-  color: #333;
-}
-
-.audio-btn {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  background: #fff;
-  border-radius: 50px;
-  padding: 12px 18px;
-  box-shadow: 0 8px 30px rgba(0,0,0,0.1);
-  cursor: pointer;
-  font-size: 0.85rem;
-}
-
-@keyframes fadeIn {
-  from {opacity: 0;}
-  to {opacity: 1;}
-}
+:root { --green:#076134; --ink:#333; --line:#cfcfcf; }
+* { box-sizing:border-box; }
+body { margin:0; font-family:'Inter',sans-serif; background:linear-gradient(180deg,#f7f5f2,#fff); color:var(--ink); overflow-x:hidden; }
+button,input,textarea { font:inherit; }
+.hero { min-height:100vh; display:flex; align-items:center; justify-content:center; text-align:center; flex-direction:column; padding:20px; animation:fadeIn 2s ease; }
+.hero h1 { font-family:'Playfair Display',serif; font-size:clamp(2.4rem,8vw,3.4rem); margin:0 0 10px; }
+.hero p { opacity:.7; }
+.scroll { margin-top:40px; font-size:.9rem; opacity:.5; }
+.timeline { position:relative; max-width:700px; margin:0 auto; padding:80px 20px 50px; }
+.timeline::before { content:''; position:absolute; left:20px; inset-block:0; width:1px; background:var(--line); border-radius:2px; }
+.event { position:relative; margin-bottom:60px; opacity:0; transform:translateY(40px); transition:all .8s ease; padding-left:60px; }
+.event.visible { opacity:1; transform:translateY(0); }
+.event::before { content:''; position:absolute; left:22px; top:5px; width:10px; height:10px; background:var(--green); border-radius:50%; border:2px solid #fff; box-shadow:0 0 0 2px var(--green); }
+.event h3 { font-family:'Playfair Display',serif; margin:0 0 8px; }
+.event-date { font-size:.85rem; opacity:.6; }
+.event p { margin:5px 0; white-space:pre-wrap; }
+.media-row { display:flex; flex-wrap:wrap; gap:8px; margin-top:8px; }
+.thumbnail { width:110px; height:68px; object-fit:cover; cursor:pointer; border-radius:6px; border:1px solid #ccc; background:#eee; padding:0; overflow:hidden; }
+.thumbnail img,.thumbnail video { width:100%; height:100%; display:block; object-fit:cover; }
+.audio-thumbnail { display:grid; place-items:center; background:linear-gradient(135deg,#edf5f1,#d8e9e0); color:var(--green); font-size:1.7rem; }
+.entry-actions { display:none; gap:8px; margin-top:12px; }
+body.editing .dynamic-event .entry-actions { display:flex; }
+.small-btn { border:1px solid #d2d2d2; background:#fff; border-radius:999px; padding:7px 11px; cursor:pointer; }
+.small-btn.danger { color:#a12a2a; }
+.toolbar { display:flex; justify-content:center; gap:10px; padding:0 20px 28px; }
+.toolbar-btn { display:grid; place-items:center; width:36px; height:36px; border:0; border-radius:50%; padding:0; background:var(--green); color:#fff; box-shadow:0 5px 16px rgba(0,0,0,.14); cursor:pointer; }
+.toolbar-btn svg { width:16px; height:16px; fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+.toolbar-btn:hover,.toolbar-btn:focus-visible,.toolbar-btn.active { background:#054c29; transform:translateY(-1px); }
+.modal { display:none; position:fixed; z-index:999; inset:0; background:rgba(0,0,0,.7); align-items:center; justify-content:center; padding:18px; }
+.modal.open { display:flex; }
+.modal-card { position:relative; background:#fff; width:min(560px,100%); max-height:90vh; border-radius:12px; overflow:auto; padding:24px; box-shadow:0 18px 70px rgba(0,0,0,.28); }
+.viewer-card { width:min(900px,100%); text-align:center; background:#111; padding:12px; }
+.viewer-card img,.viewer-card video { max-width:100%; max-height:80vh; border-radius:7px; }
+.viewer-card audio { width:min(500px,100%); margin:50px 0; }
+.modal-close { position:absolute; z-index:2; top:8px; right:10px; width:36px; height:36px; border:0; border-radius:50%; background:rgba(255,255,255,.9); font-size:1.5rem; cursor:pointer; }
+.form-card h2 { margin:0 40px 22px 0; font-family:'Playfair Display',serif; }
+.field { display:grid; gap:7px; margin-bottom:16px; }
+.field label { font-size:.85rem; font-weight:500; }
+.field input,.field textarea { width:100%; border:1px solid #ccc; border-radius:8px; padding:11px; background:#fff; }
+.field textarea { min-height:90px; resize:vertical; }
+.hint { margin:-8px 0 16px; font-size:.78rem; color:#777; }
+.form-status { min-height:20px; margin:4px 0 14px; font-size:.88rem; color:#a12a2a; }
+.submit-btn { width:100%; border:0; border-radius:9px; padding:13px; background:var(--green); color:#fff; cursor:pointer; font-weight:500; }
+.submit-btn:disabled { opacity:.6; cursor:wait; }
+.load-status { display:none; padding-left:60px; color:#777; font-size:.85rem; }
+.load-status.show { display:block; }
+footer { text-align:center; font-size:.55rem; color:#666; padding:12px 0; border-top:1px solid rgba(50,50,50,.06); }
+@keyframes fadeIn { from{opacity:0} to{opacity:1} }
 </style>
 </head>
 <body>
-
-<div class="hero">
+<header class="hero">
   <h1>Bienvenue au monde, Jules</h1>
   <p>25 septembre 2025</p>
   <div class="scroll">↓ Swipe pour un carnet de souvenirs</div>
+</header>
+
+<main class="timeline">
+  <div id="dynamicTimeline"></div>
+  <p class="load-status" id="loadStatus"></p>
+</main>
+
+<div class="toolbar">
+  <button class="toolbar-btn" id="editModeButton" type="button" aria-label="Modifier" title="Modifier">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
+  </button>
+  <button class="toolbar-btn" id="addButton" type="button" aria-label="Ajouter" title="Ajouter">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+  </button>
 </div>
+<footer>Made by <strong>Godfather - Ahmed Jerbi</strong>. © 2025 — All rights reserved. Reuse or republication prohibited.</footer>
 
-<div class="timeline">
-
-  <div class="event">
-    <h3>Naissance</h3>
-    <span>25.09.2025</span>
-    <p>Jules est né à 3:45 du matin, pesant 3.2 kg et mesurant 50 cm.</p>
-    <img src="Jules3.jpeg" class="thumbnail" data-type="image" data-src="Jules3.jpeg">
-  </div>
-
-  <div class="event">
-    <h3>Première sortie au monde</h3>
-    <span>29.09.2025</span>
-    <p>Trajet Hôpital → Maison</p>
-    <img src="Jules1.jpg" class="thumbnail" data-type="image" data-src="Jules1.jpg">
-    <img src="Jules2.jpg" class="thumbnail" data-type="image" data-src="Jules2.jpg">
-  </div>
-
-    <div class="event">
-    <h3>Premier Noël</h3>
-    <span>28.12.2025</span>
-    <p>Un diner en famille</p>
-    <img src="Jules1.jpg" class="thumbnail" data-type="image" data-src="Jules1.jpg">
-  </div>
-
-<div class="event">
-    <h3>Premier mot</h3>
-    <span>28.12.2025</span>
-    <p>Mama? papa..?</p>
-    <img src="audio.webp" class="thumbnail" data-type="audio" data-src="placeholder.mp3">
-  </div>
-
+<div class="modal" id="viewerModal" role="dialog" aria-modal="true" aria-label="Média">
+  <div class="modal-card viewer-card" id="viewerContent"></div>
+  <button class="modal-close" type="button" data-close="viewerModal" aria-label="Fermer">×</button>
 </div>
-
-
-<!-- Footer -->
-
-<footer style="text-align:center;font-size:0.55rem;color:#666;padding:12px 0;border-top:1px solid rgba(50, 50, 50, 0.06);">
-  Made by <strong>Godfather - Ahmed Jerbi</strong>. © 2025 — All rights reserved. Reuse or republication prohibited.
-</footer>
-
-<!-- Modal -->
-<div class="modal" id="modal">
-  <div class="modal-content" id="modalContent"></div>
-  <div class="modal-close" onclick="closeModal()">×</div>
+<div class="modal" id="entryModal" role="dialog" aria-modal="true" aria-labelledby="entryModalTitle">
+  <div class="modal-card form-card">
+    <button class="modal-close" type="button" data-close="entryModal" aria-label="Fermer">×</button>
+    <h2 id="entryModalTitle">Ajouter un souvenir</h2>
+    <form id="entryForm">
+      <div class="field"><label for="entryTitle">Titre</label><input id="entryTitle" name="title" maxlength="80" required></div>
+      <div class="field"><label for="entryDate">Date</label><input id="entryDate" name="eventDate" type="date" required></div>
+      <div class="field"><label for="entryDescription">Petit message</label><textarea id="entryDescription" name="description" maxlength="500"></textarea></div>
+      <div class="field" id="fileField"><label for="entryFile">Photos, vidéos ou audios</label><input id="entryFile" name="files" type="file" multiple accept="image/jpeg,image/png,image/webp,image/gif,video/mp4,video/webm,video/quicktime,audio/mpeg,audio/mp4,audio/ogg,audio/wav,audio/webm"></div>
+      <p class="hint" id="fileHint">Jusqu’à 10 fichiers et 50 Mo au total. Les souvenirs seront visibles publiquement.</p>
+      <p class="form-status" id="formStatus" role="status"></p>
+      <button class="submit-btn" id="submitButton" type="submit">Ajouter à la timeline</button>
+    </form>
+  </div>
 </div>
 
 <script>
-const events = document.querySelectorAll('.event');
+const projectUrl = 'https://olzpcvkddcdhzwyuwbpr.supabase.co';
+const endpoint = `${projectUrl}/functions/v1/jules-media`;
+const dynamicTimeline = document.getElementById('dynamicTimeline');
+const loadStatus = document.getElementById('loadStatus');
+const viewerModal = document.getElementById('viewerModal');
+const viewerContent = document.getElementById('viewerContent');
+const entryModal = document.getElementById('entryModal');
+const entryForm = document.getElementById('entryForm');
+const formStatus = document.getElementById('formStatus');
+const submitButton = document.getElementById('submitButton');
+const addButton = document.getElementById('addButton');
+const editModeButton = document.getElementById('editModeButton');
+const fileField = document.getElementById('fileField');
+const fileHint = document.getElementById('fileHint');
+let entries = [];
+let editorPassphrase = '';
+let editingId = null;
 
-const observer = new IntersectionObserver(entries => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('visible');
-    }
-  });
-}, { threshold: 0.3 });
+const observer = new IntersectionObserver(items => items.forEach(item => {
+  if (item.isIntersecting) item.target.classList.add('visible');
+}), { threshold:.2 });
+document.querySelectorAll('.event').forEach(event => observer.observe(event));
 
-events.forEach(e => observer.observe(e));
-
-/* Modal logic */
-const modal = document.getElementById('modal');
-const modalContent = document.getElementById('modalContent');
-
-document.querySelectorAll('.thumbnail').forEach(item => {
-  item.addEventListener('click', () => {
-    const type = item.dataset.type;
-    const src = item.dataset.src;
-    modalContent.innerHTML = '';
-    if(type === 'image'){
-      const img = document.createElement('img');
-      img.src = src;
-      modalContent.appendChild(img);
-    } else if(type === 'video'){
-      const video = document.createElement('video');
-      video.src = src;
-      video.controls = true;
-      video.autoplay = true;
-      modalContent.appendChild(video);
-    } else if(type === 'audio'){
-      const audio = document.createElement('audio');
-      audio.src = src;
-      audio.controls = true;
-      audio.autoplay = true;
-      modalContent.appendChild(audio);
-    }
-    modal.style.display = 'flex';
-  });
+function showModal(modal) { modal.classList.add('open'); }
+function closeModal(modal) { modal.classList.remove('open'); if (modal === viewerModal) viewerContent.replaceChildren(); }
+function openMedia(type, src) {
+  viewerContent.replaceChildren();
+  const media = document.createElement(type === 'image' ? 'img' : type);
+  media.src = src;
+  if (type !== 'image') { media.controls = true; media.autoplay = true; }
+  viewerContent.append(media); showModal(viewerModal);
+}
+document.addEventListener('click', event => {
+  const closeButton = event.target.closest('[data-close]');
+  if (closeButton) closeModal(document.getElementById(closeButton.dataset.close));
+  const thumbnail = event.target.closest('.thumbnail');
+  if (thumbnail) openMedia(thumbnail.dataset.type, thumbnail.dataset.src);
 });
+document.querySelectorAll('.modal').forEach(modal => modal.addEventListener('click', event => { if (event.target === modal) closeModal(modal); }));
+document.addEventListener('keydown', event => { if (event.key === 'Escape') document.querySelectorAll('.modal.open').forEach(closeModal); });
 
-function closeModal(){
-  modal.style.display = 'none';
-  modalContent.innerHTML = '';
+async function callJson(payload) {
+  const response = await fetch(endpoint, { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(payload) });
+  const result = await response.json().catch(() => ({}));
+  if (!response.ok) throw new Error(result.error || 'Une erreur est survenue.');
+  return result;
+}
+async function ensureEditor() {
+  if (editorPassphrase) return true;
+  const candidate = prompt('Mot de passe éditeur (pas le mot de passe de la base de données) :');
+  if (!candidate) return false;
+  try { await callJson({action:'authorize',passphrase:candidate}); editorPassphrase = candidate; return true; }
+  catch (error) { alert(error.message); return false; }
 }
 
-/* Close modal on click outside */
-window.addEventListener('click', e => {
-  if(e.target === modal) closeModal();
+function createMediaButton(media) {
+  const button = document.createElement('button');
+  button.type = 'button'; button.className = `thumbnail${media.type === 'audio' ? ' audio-thumbnail' : ''}`;
+  button.dataset.type = media.type; button.dataset.src = media.url;
+  button.setAttribute('aria-label', media.type === 'audio' ? 'Écouter le souvenir' : 'Voir le souvenir');
+  if (media.type === 'image') { const image=document.createElement('img'); image.src=media.url; image.alt=''; button.append(image); }
+  else if (media.type === 'video') { const video=document.createElement('video'); video.src=media.url; video.muted=true; video.preload='metadata'; button.append(video); }
+  else button.textContent = '♪';
+  return button;
+}
+function formatDate(date) { return new Intl.DateTimeFormat('fr-FR',{timeZone:'UTC'}).format(new Date(`${date}T00:00:00Z`)); }
+function renderEntries() {
+  dynamicTimeline.replaceChildren();
+  entries.forEach(entry => {
+    const article=document.createElement('article'); article.className='event dynamic-event';
+    const title=document.createElement('h3'); title.textContent=entry.title;
+    const date=document.createElement('time'); date.className='event-date'; date.textContent=formatDate(entry.eventDate);
+    const description=document.createElement('p'); description.textContent=entry.description;
+    const mediaRow=document.createElement('div'); mediaRow.className='media-row';
+    entry.media.forEach(media=>mediaRow.append(createMediaButton(media)));
+    const actions=document.createElement('div'); actions.className='entry-actions';
+    const edit=document.createElement('button'); edit.type='button'; edit.className='small-btn'; edit.textContent='Modifier'; edit.addEventListener('click',()=>openEdit(entry));
+    const remove=document.createElement('button'); remove.type='button'; remove.className='small-btn danger'; remove.textContent='Supprimer'; remove.addEventListener('click',()=>deleteEntry(entry));
+    actions.append(edit,remove); article.append(title,date,description,mediaRow,actions); dynamicTimeline.append(article); observer.observe(article);
+  });
+}
+async function loadEntries() {
+  loadStatus.classList.remove('show');
+  try {
+    const response=await fetch(endpoint); const result=await response.json();
+    if (!response.ok) throw new Error(result.error); entries=result.entries||[]; renderEntries();
+  } catch { loadStatus.textContent='Les souvenirs ajoutés ne sont pas disponibles pour le moment.'; loadStatus.classList.add('show'); }
+}
+function openAdd() {
+  editingId=null; entryForm.reset(); document.getElementById('entryDate').valueAsDate=new Date();
+  document.getElementById('entryModalTitle').textContent='Ajouter un souvenir'; submitButton.textContent='Ajouter à la timeline';
+  document.getElementById('entryFile').required=true; fileField.hidden=false; fileHint.hidden=false;
+  fileHint.textContent='Jusqu’à 10 fichiers et 50 Mo au total. Les souvenirs seront visibles publiquement.';
+  formStatus.textContent=''; showModal(entryModal);
+}
+function openEdit(entry) {
+  editingId=entry.id; entryForm.reset(); document.getElementById('entryTitle').value=entry.title; document.getElementById('entryDate').value=entry.eventDate;
+  document.getElementById('entryDescription').value=entry.description; document.getElementById('entryModalTitle').textContent='Modifier le souvenir';
+  submitButton.textContent='Enregistrer'; document.getElementById('entryFile').required=false; fileField.hidden=false; fileHint.hidden=false;
+  fileHint.textContent='Facultatif : sélectionner des fichiers remplacera tous les médias actuels.';
+  formStatus.textContent=''; showModal(entryModal);
+}
+addButton.addEventListener('click',async()=>{ if(await ensureEditor()) openAdd(); });
+editModeButton.addEventListener('click',async()=>{
+  if(!document.body.classList.contains('editing') && !(await ensureEditor())) return;
+  const editing=document.body.classList.toggle('editing');
+  editModeButton.classList.toggle('active',editing);
+  editModeButton.setAttribute('aria-pressed',String(editing));
+  editModeButton.title=editing?'Terminer':'Modifier';
 });
+entryForm.addEventListener('submit',async event=>{
+  event.preventDefault(); submitButton.disabled=true; formStatus.textContent=editingId?'Enregistrement…':'Envoi en cours…';
+  try {
+    const form=new FormData(entryForm); form.set('passphrase',editorPassphrase);
+    if(editingId) { form.set('action','update'); form.set('id',editingId); }
+    const response=await fetch(endpoint,{method:'POST',body:form}); const result=await response.json().catch(()=>({}));
+    if(!response.ok) throw new Error(result.error||'L’envoi a échoué.');
+    closeModal(entryModal); await loadEntries();
+  } catch(error) { if(/mot de passe/i.test(error.message)) editorPassphrase=''; formStatus.textContent=error.message; }
+  finally { submitButton.disabled=false; }
+});
+async function deleteEntry(entry) {
+  if(!confirm(`Supprimer « ${entry.title} » ? Cette action est définitive.`)) return;
+  try { await callJson({action:'delete',id:entry.id,passphrase:editorPassphrase}); await loadEntries(); }
+  catch(error) { alert(error.message); }
+}
+loadEntries();
 </script>
-
 </body>
 </html>
