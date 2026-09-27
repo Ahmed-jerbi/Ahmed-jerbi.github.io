@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Bienvenue Jules</title>
+<title>Le monde de Jules</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 :root { --green:#076134; --ink:#333; --line:#cfcfcf; }
@@ -18,6 +18,8 @@ button,input,textarea { font:inherit; }
 .timeline::before { content:''; position:absolute; left:calc(20px + var(--axis)); inset-block:0; width:1px; background:var(--line); border-radius:2px; }
 .event { position:relative; margin-bottom:60px; opacity:0; transform:translateY(40px); transition:all .8s ease; padding-left:calc(var(--axis) + 30px); }
 .event.visible { opacity:1; transform:translateY(0); }
+.dynamic-event { cursor:pointer; }
+.dynamic-event:focus-visible { outline:2px solid var(--green); outline-offset:6px; }
 .event::before { content:''; position:absolute; left:calc(var(--axis) - 5px); top:5px; width:10px; height:10px; background:var(--green); border-radius:50%; border:2px solid #fff; box-shadow:0 0 0 2px var(--green); }
 .event::after { content:''; position:absolute; left:calc(var(--axis) + 7px); top:10px; width:19px; height:1px; background:var(--green); }
 .event h3 { font-family:'Playfair Display',serif; margin:0 0 8px; }
@@ -40,9 +42,45 @@ body.editing .dynamic-event .entry-actions { display:flex; }
 .modal { display:none; position:fixed; z-index:999; inset:0; background:rgba(0,0,0,.7); align-items:center; justify-content:center; padding:18px; }
 .modal.open { display:flex; }
 .modal-card { position:relative; background:#fff; width:min(560px,100%); max-height:90vh; border-radius:12px; overflow:auto; padding:24px; box-shadow:0 18px 70px rgba(0,0,0,.28); }
-.viewer-card { width:min(900px,100%); text-align:center; background:#111; padding:12px; }
-.viewer-card img,.viewer-card video { max-width:100%; max-height:80vh; border-radius:7px; }
-.viewer-card audio { width:min(500px,100%); margin:50px 0; }
+body.viewer-open { overflow:hidden; }
+.post-viewer { padding:0; background:#f7f5f2; color:var(--ink); overscroll-behavior:contain; }
+.post-stage { --rail-width:38px; position:relative; display:flex; flex-direction:column; width:100%; height:100vh; height:100dvh; background:linear-gradient(180deg,#f7f5f2,#fff); }
+.post-visual { position:relative; flex:1; min-height:0; display:flex; }
+.post-media { flex:1; min-width:0; min-height:0; display:grid; grid-template-columns:minmax(0,1fr); grid-template-rows:minmax(0,1fr); place-items:center; overflow:hidden; padding:50px 20px 0; touch-action:none; }
+.post-timeline { position:absolute; z-index:2; left:12px; top:calc(64px + env(safe-area-inset-top)); bottom:12px; width:var(--rail-width); overflow-y:auto; overflow-x:hidden; overscroll-behavior:contain; scrollbar-width:none; border-radius:20px; background:linear-gradient(90deg,rgba(255,255,255,.6),rgba(255,255,255,.08)); }
+.post-timeline::-webkit-scrollbar { display:none; }
+.post-timeline-list { position:relative; min-height:100%; padding:8px 0; }
+.post-timeline-list::before { content:''; position:absolute; top:0; bottom:0; left:18px; width:1px; background:rgba(7,97,52,.4); }
+.post-timeline-item { position:relative; display:block; width:100%; min-height:42px; padding:0; border:0; background:transparent; cursor:pointer; }
+.post-timeline-item::before { content:''; position:absolute; left:14px; top:calc(50% - 5px); width:9px; height:9px; border:2px solid #fff; border-radius:50%; background:#adb9ae; box-shadow:0 0 0 1px #adb9ae; transition:background .2s ease,transform .2s ease; }
+.post-timeline-item.active::before { background:var(--green); box-shadow:0 0 0 1px var(--green); transform:scale(1.25); }
+.post-timeline-item:focus-visible { outline:2px solid var(--green); outline-offset:-2px; border-radius:4px; }
+.post-timeline-bubble { position:absolute; z-index:3; left:calc(var(--rail-width) + 22px); top:0; padding:7px 11px; border:1px solid rgba(7,97,52,.18); border-radius:999px; background:rgba(255,255,255,.92); color:var(--green); box-shadow:0 4px 14px rgba(0,0,0,.07); font-size:.75rem; white-space:nowrap; pointer-events:none; opacity:0; transform:translate(-5px,-50%); transition:opacity .25s ease,transform .25s ease; }
+.post-stage.show-timeline-date .post-timeline-bubble { opacity:1; transform:translate(0,-50%); }
+.post-media img,.post-media video { display:block; min-width:0; min-height:0; width:100%; height:100%; object-fit:contain; }
+.post-media > * { animation:postAppear .28s ease both; }
+.post-audio { width:min(480px,100%); display:grid; justify-items:center; gap:28px; }
+.post-audio span { font-size:clamp(4rem,18vw,8rem); color:var(--green); }
+.post-audio audio { width:100%; }
+.post-empty { color:#777; }
+.post-copy { position:relative; z-index:1; flex:none; width:100%; max-height:min(38dvh,320px); overflow-y:auto; overscroll-behavior:contain; padding:26px max(24px,calc((100vw - 720px)/2)) max(28px,env(safe-area-inset-bottom)); background:linear-gradient(180deg,rgba(247,245,242,.78),#fff 28%); }
+.post-meta { display:flex; flex-wrap:wrap; gap:6px; color:#657467; font-size:.85rem; }
+.post-copy h2 { margin:10px 0 8px; font-family:'Playfair Display',serif; font-size:clamp(1.5rem,5vw,2.2rem); }
+.post-copy p { margin:0; line-height:1.5; white-space:pre-wrap; }
+.post-counter { position:absolute; z-index:2; top:calc(19px + env(safe-area-inset-top)); left:22px; font-size:.84rem; letter-spacing:.08em; color:var(--green); }
+.post-dots { display:flex; justify-content:center; gap:6px; margin-bottom:15px; }
+.post-dots[hidden] { display:none; }
+.post-dot { width:18px; height:6px; padding:0; border:0; border-radius:99px; background:#cdd8cf; cursor:pointer; }
+.post-dot.active { background:var(--green); }
+.post-nav,.post-close { position:absolute; z-index:3; display:grid; place-items:center; width:42px; height:42px; padding:0; border:1px solid rgba(7,97,52,.22); border-radius:50%; background:rgba(255,255,255,.88); color:var(--green); box-shadow:0 4px 14px rgba(0,0,0,.07); cursor:pointer; line-height:1; }
+.post-nav { font-size:1.75rem; }
+.post-nav:disabled { opacity:.3; cursor:default; }
+.post-prev-media { left:calc(var(--rail-width) + 18px); top:45%; }
+.post-next-media { right:12px; top:45%; }
+.post-prev-entry { right:16px; top:calc(74px + env(safe-area-inset-top)); }
+.post-next-entry { right:16px; top:calc(124px + env(safe-area-inset-top)); }
+.post-close { top:calc(17px + env(safe-area-inset-top)); right:16px; font-size:1.6rem; }
+@keyframes postAppear { from { opacity:.4; transform:scale(.985); } to { opacity:1; transform:scale(1); } }
 .modal-close { position:absolute; z-index:2; top:8px; right:10px; width:36px; height:36px; border:0; border-radius:50%; background:rgba(255,255,255,.9); font-size:1.5rem; cursor:pointer; }
 .form-card h2 { margin:0 40px 22px 0; font-family:'Playfair Display',serif; }
 .field { display:grid; gap:7px; margin-bottom:16px; }
@@ -87,12 +125,21 @@ body.memory-reveal .dynamic-event.visible:nth-child(n+4) { animation-delay:.4s; 
 @keyframes memoryCard { from{opacity:0;transform:translateY(30px) scale(.98)} to{opacity:1;transform:translateY(0) scale(1)} }
 @media (max-width:520px) {
   .timeline { --axis:108px; }
+  .post-stage { --rail-width:34px; }
+  .post-timeline { left:4px; }
+  .post-timeline-list::before { left:16px; }
+  .post-timeline-item::before { left:12px; }
+  .post-timeline-bubble { left:calc(var(--rail-width) + 10px); }
+  .post-media { padding-left:12px; padding-right:12px; }
+  .post-prev-media { left:calc(var(--rail-width) + 4px); }
   .event { padding-left:calc(var(--axis) + 24px); }
   .event::after { width:13px; }
   .event-date { font-size:.7rem; }
   .load-status { padding-left:calc(var(--axis) + 24px); }
 }
 @media (prefers-reduced-motion:reduce) {
+  .post-media > * { animation:none; }
+  .post-timeline-bubble { transition:none; }
   .hero,body.memory-reveal::after,body.memory-reveal .timeline::before,body.memory-reveal .timeline::after,body.memory-reveal .dynamic-event.visible { animation:none; }
   .event { transition:none; transform:none; }
 }
@@ -141,9 +188,28 @@ body.memory-reveal .dynamic-event.visible:nth-child(n+4) { animation-delay:.4s; 
 </div>
 <footer>Made by <strong>Godfather - Ahmed Jerbi</strong>. © 2025 — All rights reserved. Reuse or republication prohibited.</footer>
 
-<div class="modal" id="viewerModal" role="dialog" aria-modal="true" aria-label="Média">
-  <div class="modal-card viewer-card" id="viewerContent"></div>
-  <button class="modal-close" type="button" data-close="viewerModal" aria-label="Fermer">×</button>
+<div class="modal post-viewer" id="viewerModal" role="dialog" aria-modal="true" aria-labelledby="viewerTitle" tabindex="-1">
+  <div class="post-stage">
+    <div class="post-counter" id="viewerCounter"></div>
+    <div class="post-visual">
+      <nav class="post-timeline" aria-label="Chronologie des souvenirs">
+        <div class="post-timeline-list" id="viewerTimeline"></div>
+      </nav>
+      <span class="post-timeline-bubble" id="viewerTimelineDate" aria-hidden="true"></span>
+      <div class="post-media" id="viewerContent"></div>
+    </div>
+    <div class="post-copy">
+      <div class="post-dots" id="viewerDots"></div>
+      <div class="post-meta"><time id="viewerDate"></time><span aria-hidden="true">-</span><span id="viewerAge"></span></div>
+      <h2 id="viewerTitle"></h2>
+      <p id="viewerDescription"></p>
+    </div>
+    <button class="post-nav post-prev-media" id="previousMedia" type="button" aria-label="Média précédent">‹</button>
+    <button class="post-nav post-next-media" id="nextMedia" type="button" aria-label="Média suivant">›</button>
+    <button class="post-nav post-prev-entry" id="previousEntry" type="button" aria-label="Souvenir précédent">↑</button>
+    <button class="post-nav post-next-entry" id="nextEntry" type="button" aria-label="Souvenir suivant">↓</button>
+  </div>
+  <button class="post-close" type="button" data-close="viewerModal" aria-label="Fermer">×</button>
 </div>
 <div class="modal" id="entryModal" role="dialog" aria-modal="true" aria-labelledby="entryModalTitle">
   <div class="modal-card form-card">
@@ -173,6 +239,14 @@ const dynamicTimeline = document.getElementById('dynamicTimeline');
 const loadStatus = document.getElementById('loadStatus');
 const viewerModal = document.getElementById('viewerModal');
 const viewerContent = document.getElementById('viewerContent');
+const viewerTimeline = document.getElementById('viewerTimeline');
+const viewerTimelineDate = document.getElementById('viewerTimelineDate');
+const viewerDots = document.getElementById('viewerDots');
+const viewerDate = document.getElementById('viewerDate');
+const viewerAge = document.getElementById('viewerAge');
+const viewerTitle = document.getElementById('viewerTitle');
+const viewerDescription = document.getElementById('viewerDescription');
+const viewerCounter = document.getElementById('viewerCounter');
 const entryModal = document.getElementById('entryModal');
 const entryForm = document.getElementById('entryForm');
 const formStatus = document.getElementById('formStatus');
@@ -185,6 +259,10 @@ let entries = [];
 let editorPassphrase = '';
 let viewerPin = '';
 let animateAfterPin = false;
+let currentPostIndex = -1;
+let currentMediaIndex = 0;
+let viewerReturnFocus = null;
+let timelineDateTimer;
 try { viewerPin = sessionStorage.getItem('julesViewerPin') || ''; } catch {}
 
 function resetPinVisibility() {
@@ -212,22 +290,230 @@ const observer = new IntersectionObserver(items => items.forEach(item => {
 document.querySelectorAll('.event').forEach(event => observer.observe(event));
 
 function showModal(modal) { modal.classList.add('open'); }
-function closeModal(modal) { modal.classList.remove('open'); if (modal === viewerModal) viewerContent.replaceChildren(); }
-function openMedia(type, src) {
+function closeModal(modal) {
+  modal.classList.remove('open');
+  if (modal !== viewerModal) return;
+  document.body.classList.remove('viewer-open');
+  clearTimeout(timelineDateTimer);
+  viewerModal.querySelector('.post-stage').classList.remove('show-timeline-date');
+  viewerContent.querySelectorAll('video,audio').forEach(media => media.pause());
   viewerContent.replaceChildren();
-  const media = document.createElement(type === 'image' ? 'img' : type);
-  media.src = src;
-  if (type !== 'image') { media.controls = true; media.autoplay = true; }
-  viewerContent.append(media); showModal(viewerModal);
+  currentPostIndex = -1;
+  if (viewerReturnFocus?.isConnected) viewerReturnFocus.focus({preventScroll:true});
+  viewerReturnFocus = null;
 }
+function showTimelineDate() {
+  if (currentPostIndex < 0) return;
+  const active = viewerTimeline.children[currentPostIndex];
+  const rail = viewerTimeline.parentElement.getBoundingClientRect();
+  const visual = viewerTimeline.closest('.post-visual').getBoundingClientRect();
+  const dot = active.getBoundingClientRect();
+  const dotCenter = dot.top + dot.height / 2;
+  const stage = viewerModal.querySelector('.post-stage');
+  viewerTimelineDate.textContent = formatDate(entries[currentPostIndex].eventDate);
+  viewerTimelineDate.style.top = (dotCenter - visual.top) + 'px';
+  stage.classList.toggle('show-timeline-date', dotCenter >= rail.top && dotCenter <= rail.bottom);
+  clearTimeout(timelineDateTimer);
+  timelineDateTimer = setTimeout(() => stage.classList.remove('show-timeline-date'), 3000);
+}
+viewerTimeline.parentElement.addEventListener('scroll', () => {
+  if (viewerModal.classList.contains('open')) showTimelineDate();
+});
+function renderViewerTimeline() {
+  viewerTimeline.replaceChildren();
+  entries.forEach((entry, index) => {
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'post-timeline-item';
+    button.setAttribute('aria-label', formatDate(entry.eventDate) + ' : ' + entry.title);
+
+    button.addEventListener('click', () => navigatePost(index - currentPostIndex));
+    viewerTimeline.append(button);
+  });
+}
+function syncViewerTimeline() {
+  const buttons = viewerTimeline.querySelectorAll('.post-timeline-item');
+  buttons.forEach((button, index) => {
+    const active = index === currentPostIndex;
+    button.classList.toggle('active', active);
+    button.setAttribute('aria-current', String(active));
+  });
+  const active = buttons[currentPostIndex];
+  if (active) {
+    const rail = viewerTimeline.parentElement;
+    rail.scrollTop = active.offsetTop + active.offsetHeight / 2 - rail.clientHeight / 2;
+  }
+}
+function renderViewer() {
+  const entry = entries[currentPostIndex];
+  if (!entry) { closeModal(viewerModal); return; }
+  const mediaFiles = entry.media || [];
+  currentMediaIndex = Math.max(0, Math.min(currentMediaIndex, mediaFiles.length - 1));
+  viewerContent.querySelectorAll('video,audio').forEach(media => media.pause());
+  viewerContent.replaceChildren();
+  const item = mediaFiles[currentMediaIndex];
+  if (item) {
+    if (item.type === 'audio') {
+      const audioCard = document.createElement('div');
+      audioCard.className = 'post-audio';
+      const icon = document.createElement('span');
+      icon.textContent = '♪';
+      icon.setAttribute('aria-hidden', 'true');
+      const audio = document.createElement('audio');
+      audio.src = item.url;
+      audio.controls = true;
+      audio.autoplay = true;
+      audioCard.append(icon, audio);
+      viewerContent.append(audioCard);
+    } else {
+      const media = document.createElement(item.type === 'video' ? 'video' : 'img');
+      media.src = item.url;
+      if (item.type === 'image') media.alt = entry.title;
+      else {
+        media.controls = true;
+        media.autoplay = true;
+        media.playsInline = true;
+      }
+      viewerContent.append(media);
+    }
+  } else {
+    const empty = document.createElement('p');
+    empty.className = 'post-empty';
+    empty.textContent = 'Aucun média pour ce souvenir.';
+    viewerContent.append(empty);
+  }
+  viewerDate.dateTime = entry.eventDate;
+  viewerDate.textContent = formatDate(entry.eventDate);
+  viewerAge.textContent = formatAge(entry.eventDate);
+  viewerTitle.textContent = entry.title;
+  viewerDescription.textContent = entry.description || '';
+  viewerCounter.textContent = (currentPostIndex + 1) + ' / ' + entries.length;
+  viewerDots.replaceChildren();
+  viewerDots.hidden = mediaFiles.length < 2;
+  mediaFiles.forEach((file, index) => {
+    const dot = document.createElement('button');
+    dot.type = 'button';
+    dot.className = 'post-dot' + (index === currentMediaIndex ? ' active' : '');
+    dot.setAttribute('aria-label', 'Média ' + (index + 1) + ' sur ' + mediaFiles.length);
+    dot.setAttribute('aria-current', index === currentMediaIndex ? 'true' : 'false');
+    dot.addEventListener('click', () => { currentMediaIndex = index; renderViewer(); });
+    viewerDots.append(dot);
+  });
+  document.getElementById('previousMedia').disabled = currentMediaIndex === 0;
+  document.getElementById('nextMedia').disabled = currentMediaIndex >= mediaFiles.length - 1;
+  document.getElementById('previousEntry').disabled = currentPostIndex === 0;
+  document.getElementById('nextEntry').disabled = currentPostIndex >= entries.length - 1;
+  syncViewerTimeline();
+}
+function openPost(index, mediaIndex = 0, trigger = document.activeElement) {
+  if (index < 0 || index >= entries.length) return;
+  viewerReturnFocus = trigger;
+  currentPostIndex = index;
+  currentMediaIndex = mediaIndex;
+  document.body.classList.add('viewer-open');
+  showModal(viewerModal);
+  renderViewerTimeline();
+  renderViewer();
+  showTimelineDate();
+  viewerModal.focus({preventScroll:true});
+}
+function navigatePost(direction) {
+  const next = currentPostIndex + direction;
+  if (next < 0 || next >= entries.length) return;
+  currentPostIndex = next;
+  currentMediaIndex = 0;
+  renderViewer();
+  showTimelineDate();
+  viewerModal.querySelector('.post-copy').scrollTop = 0;
+}
+function navigateMedia(direction) {
+  const next = currentMediaIndex + direction;
+  if (next < 0 || next >= (entries[currentPostIndex]?.media?.length || 0)) return;
+  currentMediaIndex = next;
+  renderViewer();
+}
+document.getElementById('previousMedia').addEventListener('click', () => navigateMedia(-1));
+document.getElementById('nextMedia').addEventListener('click', () => navigateMedia(1));
+document.getElementById('previousEntry').addEventListener('click', () => navigatePost(-1));
+document.getElementById('nextEntry').addEventListener('click', () => navigatePost(1));
 document.addEventListener('click', event => {
   const closeButton = event.target.closest('[data-close]');
-  if (closeButton) closeModal(document.getElementById(closeButton.dataset.close));
+  if (closeButton) { closeModal(document.getElementById(closeButton.dataset.close)); return; }
+  const article = event.target.closest('.dynamic-event');
+  if (!article || event.target.closest('.entry-actions')) return;
   const thumbnail = event.target.closest('.thumbnail');
-  if (thumbnail) openMedia(thumbnail.dataset.type, thumbnail.dataset.src);
+  openPost(Number(article.dataset.index), thumbnail ? Number(thumbnail.dataset.mediaIndex) : 0, thumbnail || article);
 });
-document.querySelectorAll('.modal').forEach(modal => modal.addEventListener('click', event => { if (event.target === modal) closeModal(modal); }));
-document.addEventListener('keydown', event => { if (event.key === 'Escape') document.querySelectorAll('.modal.open').forEach(closeModal); });
+document.querySelectorAll('.modal').forEach(modal => modal.addEventListener('click', event => {
+  if (event.target === modal) closeModal(modal);
+}));
+document.addEventListener('keydown', event => {
+  if (event.key === 'Escape') {
+    document.querySelectorAll('.modal.open').forEach(closeModal);
+    return;
+  }
+  if (viewerModal.classList.contains('open')) {
+    if (event.target.matches('audio,video')) return;
+    const direction = {ArrowUp:-1, ArrowDown:1, ArrowLeft:-1, ArrowRight:1}[event.key];
+    if (direction === undefined) return;
+    event.preventDefault();
+    if (event.key === 'ArrowUp' || event.key === 'ArrowDown') navigatePost(direction);
+    else navigateMedia(direction);
+    return;
+  }
+  if (event.target.classList?.contains('dynamic-event') && (event.key === 'Enter' || event.key === ' ')) {
+    event.preventDefault();
+    openPost(Number(event.target.dataset.index), 0, event.target);
+  }
+});
+let wheelTotal = 0;
+let wheelAxis = '';
+let lastWheel = 0;
+let wheelLockedUntil = 0;
+viewerModal.addEventListener('wheel', event => {
+  if (event.target.closest('.post-timeline')) return;
+  const copy = event.target.closest('.post-copy');
+  if (copy && Math.abs(event.deltaY) >= Math.abs(event.deltaX)) {
+    const canScroll = event.deltaY > 0
+      ? copy.scrollTop + copy.clientHeight < copy.scrollHeight - 2
+      : copy.scrollTop > 2;
+    if (canScroll) return;
+  }
+  event.preventDefault();
+  const axis = Math.abs(event.deltaX) > Math.abs(event.deltaY) ? 'horizontal' : 'vertical';
+  const now = Date.now();
+  if (now - lastWheel > 250 || axis !== wheelAxis) wheelTotal = 0;
+  lastWheel = now;
+  wheelAxis = axis;
+  if (now < wheelLockedUntil) return;
+  wheelTotal += axis === 'horizontal' ? event.deltaX : event.deltaY;
+  if (Math.abs(wheelTotal) < 65) return;
+  if (axis === 'horizontal') navigateMedia(wheelTotal > 0 ? 1 : -1);
+  else navigatePost(wheelTotal > 0 ? 1 : -1);
+  wheelTotal = 0;
+  wheelLockedUntil = now + 650;
+}, {passive:false});
+let touchStart = null;
+viewerModal.addEventListener('touchstart', event => {
+  if (event.touches.length !== 1 || event.target.closest('button,audio,.post-timeline')) { touchStart = null; return; }
+  touchStart = {
+    x:event.touches[0].clientX,
+    y:event.touches[0].clientY,
+    inCopy:!!event.target.closest('.post-copy'),
+  };
+}, {passive:true});
+viewerModal.addEventListener('touchend', event => {
+  if (!touchStart || event.changedTouches.length !== 1) return;
+  const dx = event.changedTouches[0].clientX - touchStart.x;
+  const dy = event.changedTouches[0].clientY - touchStart.y;
+  if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.2) navigateMedia(dx < 0 ? 1 : -1);
+  else if (Math.abs(dy) > 50 && Math.abs(dy) > Math.abs(dx) * 1.2) {
+    const copy = viewerModal.querySelector('.post-copy');
+    if (!touchStart.inCopy || copy.scrollHeight <= copy.clientHeight + 2) navigatePost(dy < 0 ? 1 : -1);
+  }
+  touchStart = null;
+}, {passive:true});
+viewerModal.addEventListener('touchcancel', () => { touchStart = null; });
 
 async function callJson(payload) {
   const headers = {'Content-Type':'application/json'};
@@ -248,10 +534,10 @@ async function ensureEditor() {
   catch (error) { alert(error.message); return false; }
 }
 
-function createMediaButton(media) {
+function createMediaButton(media, mediaIndex) {
   const button = document.createElement('button');
   button.type = 'button'; button.className = `thumbnail${media.type === 'audio' ? ' audio-thumbnail' : ''}`;
-  button.dataset.type = media.type; button.dataset.src = media.url;
+  button.dataset.mediaIndex = String(mediaIndex);
   button.setAttribute('aria-label', media.type === 'audio' ? 'Écouter le souvenir' : 'Voir le souvenir');
   if (media.type === 'image') { const image=document.createElement('img'); image.src=media.url; image.alt=''; button.append(image); }
   else if (media.type === 'video') { const video=document.createElement('video'); video.src=media.url; video.muted=true; video.preload='metadata'; button.append(video); }
@@ -283,14 +569,14 @@ function formatAge(date) {
 }
 function renderEntries() {
   dynamicTimeline.replaceChildren();
-  entries.forEach(entry => {
-    const article=document.createElement('article'); article.className='event dynamic-event';
+  entries.forEach((entry, index) => {
+    const article=document.createElement('article'); article.className='event dynamic-event'; article.dataset.index=String(index); article.tabIndex=0; article.setAttribute('aria-label','Ouvrir ' + entry.title);
     const title=document.createElement('h3'); title.textContent=entry.title;
     const date=document.createElement('time'); date.className='event-date'; date.dateTime=entry.eventDate; date.textContent=formatDate(entry.eventDate);
     const age=document.createElement('span'); age.className='event-age'; age.textContent=formatAge(entry.eventDate);
     const description=document.createElement('p'); description.textContent=entry.description;
     const mediaRow=document.createElement('div'); mediaRow.className='media-row';
-    entry.media.forEach(media=>mediaRow.append(createMediaButton(media)));
+    entry.media.forEach((media, mediaIndex)=>mediaRow.append(createMediaButton(media, mediaIndex)));
     const actions=document.createElement('div'); actions.className='entry-actions';
     const edit=document.createElement('button'); edit.type='button'; edit.className='small-btn'; edit.textContent='Modifier'; edit.addEventListener('click',()=>openEdit(entry));
     const remove=document.createElement('button'); remove.type='button'; remove.className='small-btn danger'; remove.textContent='Supprimer'; remove.addEventListener('click',()=>deleteEntry(entry));
