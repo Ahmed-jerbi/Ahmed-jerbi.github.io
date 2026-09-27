@@ -53,14 +53,52 @@ body.editing .dynamic-event .entry-actions { display:flex; }
 .load-status { display:none; padding-left:60px; color:#777; font-size:.85rem; }
 .load-status.show { display:block; }
 footer { text-align:center; font-size:.55rem; color:#666; padding:12px 0; border-top:1px solid rgba(50,50,50,.06); }
+body:not(.unlocked) .timeline,body:not(.unlocked) .toolbar,body:not(.unlocked) footer { display:none; }
+.access-screen { display:flex; justify-content:center; padding:36px 20px 80px; }
+body.unlocked .access-screen { display:none; }
+.access-card { width:min(340px,100%); background:#fff; border-radius:14px; padding:24px; text-align:center; box-shadow:0 14px 45px rgba(0,0,0,.09); }
+.access-card #accessTitle { margin:0 0 18px; color:var(--ink); font-size:.95rem; line-height:1.5; }
+.access-card .field { text-align:left; margin-bottom:0; }
+.pin-row { display:flex; gap:6px; }
+.pin-input-wrap { position:relative; flex:1; min-width:0; }
+.pin-input-wrap input { width:100%; padding-right:42px; }
+.pin-visibility { position:absolute; top:50%; right:4px; transform:translateY(-50%); width:36px; height:36px; display:grid; place-items:center; border:0; background:transparent; color:#666; cursor:pointer; }
+.pin-submit { flex:0 0 42px; display:grid; place-items:center; border:1px solid var(--green); border-radius:8px; background:var(--green); color:#fff; cursor:pointer; font-size:1.5rem; line-height:1; }
+.pin-visibility svg { width:19px; height:19px; fill:none; stroke:currentColor; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; }
+.pin-visibility .eye-slash { display:none; }
+.pin-visibility[aria-pressed="true"] .eye-slash { display:block; }
+.pin-submit:disabled { opacity:.6; cursor:wait; }
+#accessStatus { min-height:0; margin:8px 0 0; }
+#accessStatus:empty { display:none; }
 @keyframes fadeIn { from{opacity:0} to{opacity:1} }
 </style>
 </head>
 <body>
 <header class="hero">
   <h1>Bienvenue au monde de Jules</h1>
-  <div class="scroll">↓ Swipe pour voir le carnet de souvenirs</div>
+  <div class="scroll">&darr; Faites d&eacute;filer pour continuer</div>
 </header>
+
+<section class="access-screen" id="accessScreen" aria-labelledby="accessTitle">
+  <div class="access-card">
+    <p id="accessTitle">Entrez le code PIN pour acc&eacute;der aux souvenirs.</p>
+    <form id="accessForm">
+      <div class="field">
+        <label for="viewerPin">Code PIN</label>
+        <div class="pin-row">
+          <div class="pin-input-wrap">
+            <input id="viewerPin" name="pin" type="password" inputmode="numeric" pattern="[0-9]{8,12}" minlength="8" maxlength="12" autocomplete="off" title="8 &agrave; 12 chiffres" required>
+            <button class="pin-visibility" id="pinVisibilityButton" type="button" aria-label="Afficher le code PIN" aria-pressed="false" title="Afficher le code PIN">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.6-6 10-6 10 6 10 6-3.6 6-10 6S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/><path class="eye-slash" d="M3 3 21 21"/></svg>
+            </button>
+          </div>
+          <button class="pin-submit" id="accessButton" type="submit" aria-label="Valider le code PIN" title="Valider le code PIN">&gt;</button>
+        </div>
+      </div>
+      <p class="form-status" id="accessStatus" role="status" aria-live="polite"></p>
+    </form>
+  </div>
+</section>
 
 <main class="timeline">
   <div id="dynamicTimeline"></div>
@@ -90,7 +128,7 @@ footer { text-align:center; font-size:.55rem; color:#666; padding:12px 0; border
       <div class="field"><label for="entryDate">Date</label><input id="entryDate" name="eventDate" type="date" required></div>
       <div class="field"><label for="entryDescription">Petit message</label><textarea id="entryDescription" name="description" maxlength="500"></textarea></div>
       <div class="field" id="fileField"><label for="entryFile">Photos, vidéos ou audios</label><input id="entryFile" name="files" type="file" multiple accept="image/jpeg,image/png,image/webp,image/gif,video/mp4,video/webm,video/quicktime,audio/mpeg,audio/mp4,audio/ogg,audio/wav,audio/webm"></div>
-      <p class="hint" id="fileHint">Jusqu’à 10 fichiers et 50 Mo au total. Les souvenirs seront visibles publiquement.</p>
+      <p class="hint" id="fileHint">Jusqu’à 10 fichiers et 50 Mo au total.</p>
       <p class="form-status" id="formStatus" role="status"></p>
       <button class="submit-btn" id="submitButton" type="submit">Ajouter à la timeline</button>
     </form>
@@ -100,6 +138,11 @@ footer { text-align:center; font-size:.55rem; color:#666; padding:12px 0; border
 <script>
 const projectUrl = 'https://olzpcvkddcdhzwyuwbpr.supabase.co';
 const endpoint = `${projectUrl}/functions/v1/jules-media`;
+const accessForm = document.getElementById('accessForm');
+const accessStatus = document.getElementById('accessStatus');
+const accessButton = document.getElementById('accessButton');
+const pinInput = document.getElementById('viewerPin');
+const pinVisibilityButton = document.getElementById('pinVisibilityButton');
 const dynamicTimeline = document.getElementById('dynamicTimeline');
 const loadStatus = document.getElementById('loadStatus');
 const viewerModal = document.getElementById('viewerModal');
@@ -114,6 +157,26 @@ const fileField = document.getElementById('fileField');
 const fileHint = document.getElementById('fileHint');
 let entries = [];
 let editorPassphrase = '';
+let viewerPin = '';
+try { viewerPin = sessionStorage.getItem('julesViewerPin') || ''; } catch {}
+
+function resetPinVisibility() {
+  pinInput.type='password';
+  pinVisibilityButton.setAttribute('aria-pressed','false');
+  pinVisibilityButton.setAttribute('aria-label','Afficher le code PIN');
+  pinVisibilityButton.title='Afficher le code PIN';
+}
+
+function lockScreen(message = '') {
+  viewerPin = '';
+  entries = [];
+  dynamicTimeline.replaceChildren();
+  document.body.classList.remove('unlocked', 'editing');
+  document.querySelectorAll('.modal.open').forEach(closeModal);
+  accessStatus.textContent = message;
+  resetPinVisibility();
+  try { sessionStorage.removeItem('julesViewerPin'); } catch {}
+}
 let editingId = null;
 
 const observer = new IntersectionObserver(items => items.forEach(item => {
@@ -140,9 +203,14 @@ document.querySelectorAll('.modal').forEach(modal => modal.addEventListener('cli
 document.addEventListener('keydown', event => { if (event.key === 'Escape') document.querySelectorAll('.modal.open').forEach(closeModal); });
 
 async function callJson(payload) {
-  const response = await fetch(endpoint, { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(payload) });
+  const headers = {'Content-Type':'application/json'};
+  if (viewerPin) headers['x-jules-pin'] = viewerPin;
+  const response = await fetch(endpoint, { method:'POST', headers, body:JSON.stringify(payload) });
   const result = await response.json().catch(() => ({}));
-  if (!response.ok) throw new Error(result.error || 'Une erreur est survenue.');
+  if (!response.ok) {
+    if (result.error === 'Code familial incorrect.') lockScreen('Code incorrect. Réessayez.');
+    throw new Error(result.error || 'Une erreur est survenue.');
+  }
   return result;
 }
 async function ensureEditor() {
@@ -180,17 +248,37 @@ function renderEntries() {
   });
 }
 async function loadEntries() {
+  if (!viewerPin) return false;
   loadStatus.classList.remove('show');
   try {
-    const response=await fetch(endpoint); const result=await response.json();
-    if (!response.ok) throw new Error(result.error); entries=result.entries||[]; renderEntries();
-  } catch { loadStatus.textContent='Les souvenirs ajoutés ne sont pas disponibles pour le moment.'; loadStatus.classList.add('show'); }
+    const response=await fetch(endpoint,{headers:{'x-jules-pin':viewerPin}});
+    const result=await response.json().catch(()=>({}));
+    if (response.status === 401) {
+      lockScreen('Code incorrect. Réessayez.');
+      return false;
+    }
+    if (!response.ok) throw new Error(result.error||'Impossible de charger les souvenirs.');
+    entries=result.entries||[];
+    renderEntries();
+    document.body.classList.add('unlocked');
+    accessForm.reset();
+    resetPinVisibility();
+    try { sessionStorage.setItem('julesViewerPin',viewerPin); } catch {}
+    accessStatus.textContent='';
+    return true;
+  } catch {
+    if (document.body.classList.contains('unlocked')) {
+      loadStatus.textContent='Les souvenirs ajoutés ne sont pas disponibles pour le moment.';
+      loadStatus.classList.add('show');
+    } else accessStatus.textContent='Les souvenirs ne sont pas disponibles pour le moment. Réessayez plus tard.';
+    return false;
+  }
 }
 function openAdd() {
   editingId=null; entryForm.reset(); document.getElementById('entryDate').valueAsDate=new Date();
   document.getElementById('entryModalTitle').textContent='Ajouter un souvenir'; submitButton.textContent='Ajouter à la timeline';
   document.getElementById('entryFile').required=true; fileField.hidden=false; fileHint.hidden=false;
-  fileHint.textContent='Jusqu’à 10 fichiers et 50 Mo au total. Les souvenirs seront visibles publiquement.';
+  fileHint.textContent='Jusqu’à 10 fichiers et 50 Mo au total.';
   formStatus.textContent=''; showModal(entryModal);
 }
 function openEdit(entry) {
@@ -213,8 +301,11 @@ entryForm.addEventListener('submit',async event=>{
   try {
     const form=new FormData(entryForm); form.set('passphrase',editorPassphrase);
     if(editingId) { form.set('action','update'); form.set('id',editingId); }
-    const response=await fetch(endpoint,{method:'POST',body:form}); const result=await response.json().catch(()=>({}));
-    if(!response.ok) throw new Error(result.error||'L’envoi a échoué.');
+    const response=await fetch(endpoint,{method:'POST',headers:{'x-jules-pin':viewerPin},body:form}); const result=await response.json().catch(()=>({}));
+    if(!response.ok) {
+      if(response.status===401 && result.error==='Code familial incorrect.') lockScreen('Code incorrect. Réessayez.');
+      throw new Error(result.error||'L’envoi a échoué.');
+    }
     closeModal(entryModal); await loadEntries();
   } catch(error) { if(/mot de passe/i.test(error.message)) editorPassphrase=''; formStatus.textContent=error.message; }
   finally { submitButton.disabled=false; }
@@ -224,7 +315,23 @@ async function deleteEntry(entry) {
   try { await callJson({action:'delete',id:entry.id,passphrase:editorPassphrase}); await loadEntries(); }
   catch(error) { alert(error.message); }
 }
-loadEntries();
+pinVisibilityButton.addEventListener('click',()=>{
+  const visible=pinInput.type==='password';
+  pinInput.type=visible?'text':'password';
+  pinVisibilityButton.setAttribute('aria-pressed',String(visible));
+  pinVisibilityButton.setAttribute('aria-label',visible?'Masquer le code PIN':'Afficher le code PIN');
+  pinVisibilityButton.title=visible?'Masquer le code PIN':'Afficher le code PIN';
+  pinInput.focus();
+});
+accessForm.addEventListener('submit',async event=>{
+  event.preventDefault();
+  accessButton.disabled=true;
+  viewerPin=document.getElementById('viewerPin').value;
+  accessStatus.textContent='Vérification du code…';
+  await loadEntries();
+  accessButton.disabled=false;
+});
+if (viewerPin) loadEntries();
 </script>
 </body>
 </html>

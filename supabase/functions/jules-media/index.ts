@@ -2,7 +2,7 @@ import { createClient } from "npm:@supabase/supabase-js@2";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Headers": "authorization, apikey, content-type",
+  "Access-Control-Allow-Headers": "apikey, content-type, x-jules-pin",
   "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
 };
 
@@ -70,6 +70,14 @@ Deno.serve(async (request) => {
   const supabase = createClient(supabaseUrl, serverKey, {
     auth: { persistSession: false },
   });
+
+  const viewerPin = Deno.env.get("JULES_VIEWER_PIN") ?? "";
+  if (!/^\d{8,12}$/.test(viewerPin)) {
+    return json({ error: "Code familial non configuré." }, 500);
+  }
+  if (!(await passphrasesMatch(request.headers.get("x-jules-pin") ?? "", viewerPin))) {
+    return json({ error: "Code familial incorrect." }, 401);
+  }
 
   if (request.method === "GET") {
     const { data: entries, error } = await supabase
