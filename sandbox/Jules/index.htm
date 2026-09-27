@@ -14,13 +14,16 @@ button,input,textarea { font:inherit; }
 .hero h1 { font-family:'Playfair Display',serif; font-size:clamp(2.4rem,8vw,3.4rem); margin:0 0 10px; }
 .hero p { opacity:.7; }
 .scroll { margin-top:40px; font-size:.9rem; opacity:.5; }
-.timeline { position:relative; max-width:700px; margin:0 auto; padding:80px 20px 50px; }
-.timeline::before { content:''; position:absolute; left:20px; inset-block:0; width:1px; background:var(--line); border-radius:2px; }
-.event { position:relative; margin-bottom:60px; opacity:0; transform:translateY(40px); transition:all .8s ease; padding-left:60px; }
+.timeline { --axis:130px; position:relative; max-width:700px; margin:0 auto; padding:80px 20px 50px; }
+.timeline::before { content:''; position:absolute; left:calc(20px + var(--axis)); inset-block:0; width:1px; background:var(--line); border-radius:2px; }
+.event { position:relative; margin-bottom:60px; opacity:0; transform:translateY(40px); transition:all .8s ease; padding-left:calc(var(--axis) + 30px); }
 .event.visible { opacity:1; transform:translateY(0); }
-.event::before { content:''; position:absolute; left:22px; top:5px; width:10px; height:10px; background:var(--green); border-radius:50%; border:2px solid #fff; box-shadow:0 0 0 2px var(--green); }
+.event::before { content:''; position:absolute; left:calc(var(--axis) - 5px); top:5px; width:10px; height:10px; background:var(--green); border-radius:50%; border:2px solid #fff; box-shadow:0 0 0 2px var(--green); }
+.event::after { content:''; position:absolute; left:calc(var(--axis) + 7px); top:10px; width:19px; height:1px; background:var(--green); }
 .event h3 { font-family:'Playfair Display',serif; margin:0 0 8px; }
-.event-date { font-size:.85rem; opacity:.6; }
+.event-date { position:absolute; left:0; top:2px; width:calc(var(--axis) - 36px); text-align:right; white-space:nowrap; font-variant-numeric:tabular-nums; font-size:.85rem; opacity:.7; }
+.event-date::after { content:''; position:absolute; left:calc(100% + 10px); top:8px; width:19px; height:1px; background:var(--green); }
+.event-age { display:block; margin:0 0 10px; font-size:.82rem; color:var(--green); }
 .event p { margin:5px 0; white-space:pre-wrap; }
 .media-row { display:flex; flex-wrap:wrap; gap:8px; margin-top:8px; }
 .thumbnail { width:110px; height:68px; object-fit:cover; cursor:pointer; border-radius:6px; border:1px solid #ccc; background:#eee; padding:0; overflow:hidden; }
@@ -50,7 +53,7 @@ body.editing .dynamic-event .entry-actions { display:flex; }
 .form-status { min-height:20px; margin:4px 0 14px; font-size:.88rem; color:#a12a2a; }
 .submit-btn { width:100%; border:0; border-radius:9px; padding:13px; background:var(--green); color:#fff; cursor:pointer; font-weight:500; }
 .submit-btn:disabled { opacity:.6; cursor:wait; }
-.load-status { display:none; padding-left:60px; color:#777; font-size:.85rem; }
+.load-status { display:none; padding-left:calc(var(--axis) + 30px); color:#777; font-size:.85rem; }
 .load-status.show { display:block; }
 footer { text-align:center; font-size:.55rem; color:#666; padding:12px 0; border-top:1px solid rgba(50,50,50,.06); }
 body:not(.unlocked) .timeline,body:not(.unlocked) .toolbar,body:not(.unlocked) footer { display:none; }
@@ -70,6 +73,29 @@ body.unlocked .access-screen { display:none; }
 .pin-submit:disabled { opacity:.6; cursor:wait; }
 #accessStatus { min-height:0; margin:8px 0 0; }
 #accessStatus:empty { display:none; }
+body.memory-reveal::after { content:''; position:fixed; inset:0; z-index:998; pointer-events:none; background:radial-gradient(ellipse at 50% 70%,rgba(187,224,204,.65),transparent 64%),linear-gradient(115deg,transparent 30%,rgba(255,255,255,.82) 49%,transparent 68%); animation:memoryLight 1.6s ease-out both; }
+body.memory-reveal .timeline::before { transform-origin:top; animation:memoryLine 1.25s cubic-bezier(.2,.7,.2,1) both; }
+.timeline::after { content:''; position:absolute; top:10px; left:0; width:100%; height:210px; pointer-events:none; opacity:0; background:radial-gradient(circle at 16% 32%,#d5e9c9 0 2px,transparent 5px),radial-gradient(circle at 72% 18%,#badbc6 0 2px,transparent 5px),radial-gradient(circle at 84% 69%,#f4e7b8 0 2px,transparent 5px); }
+body.memory-reveal .timeline::after { animation:memorySparkle 1.55s ease-out both; }
+body.memory-reveal .dynamic-event.visible { animation:memoryCard .85s cubic-bezier(.16,.8,.25,1) both; }
+body.memory-reveal .dynamic-event.visible:nth-child(2) { animation-delay:.14s; }
+body.memory-reveal .dynamic-event.visible:nth-child(3) { animation-delay:.28s; }
+body.memory-reveal .dynamic-event.visible:nth-child(n+4) { animation-delay:.4s; }
+@keyframes memoryLight { 0%{opacity:0;transform:translateY(8%) scale(1.08)} 25%{opacity:.85} 100%{opacity:0;transform:translateY(-5%) scale(1)} }
+@keyframes memoryLine { from{transform:scaleY(0);opacity:.2} to{transform:scaleY(1);opacity:1} }
+@keyframes memorySparkle { 0%,15%{opacity:0;transform:translateY(15px)} 45%{opacity:.9} 100%{opacity:0;transform:translateY(-20px)} }
+@keyframes memoryCard { from{opacity:0;transform:translateY(30px) scale(.98)} to{opacity:1;transform:translateY(0) scale(1)} }
+@media (max-width:520px) {
+  .timeline { --axis:108px; }
+  .event { padding-left:calc(var(--axis) + 24px); }
+  .event::after { width:13px; }
+  .event-date { font-size:.7rem; }
+  .load-status { padding-left:calc(var(--axis) + 24px); }
+}
+@media (prefers-reduced-motion:reduce) {
+  .hero,body.memory-reveal::after,body.memory-reveal .timeline::before,body.memory-reveal .timeline::after,body.memory-reveal .dynamic-event.visible { animation:none; }
+  .event { transition:none; transform:none; }
+}
 @keyframes fadeIn { from{opacity:0} to{opacity:1} }
 </style>
 </head>
@@ -158,6 +184,7 @@ const fileHint = document.getElementById('fileHint');
 let entries = [];
 let editorPassphrase = '';
 let viewerPin = '';
+let animateAfterPin = false;
 try { viewerPin = sessionStorage.getItem('julesViewerPin') || ''; } catch {}
 
 function resetPinVisibility() {
@@ -171,7 +198,7 @@ function lockScreen(message = '') {
   viewerPin = '';
   entries = [];
   dynamicTimeline.replaceChildren();
-  document.body.classList.remove('unlocked', 'editing');
+  document.body.classList.remove('unlocked', 'editing', 'memory-reveal');
   document.querySelectorAll('.modal.open').forEach(closeModal);
   accessStatus.textContent = message;
   resetPinVisibility();
@@ -232,19 +259,42 @@ function createMediaButton(media) {
   return button;
 }
 function formatDate(date) { return new Intl.DateTimeFormat('fr-FR',{timeZone:'UTC'}).format(new Date(`${date}T00:00:00Z`)); }
+const julesBirthDate = '2025-09-26';
+function formatAge(date) {
+  if (date < julesBirthDate) return 'Avant sa naissance';
+  const [year, month, day] = date.split('-').map(Number);
+  const [birthYear, birthMonth, birthDay] = julesBirthDate.split('-').map(Number);
+  let years = year - birthYear;
+  let months = month - birthMonth;
+  let days = day - birthDay;
+  if (days < 0) {
+    months -= 1;
+    days += new Date(Date.UTC(year, month - 1, 0)).getUTCDate();
+  }
+  if (months < 0) {
+    years -= 1;
+    months += 12;
+  }
+  const parts = [];
+  if (years) parts.push(years + ' an' + (years > 1 ? 's' : ''));
+  if (months) parts.push(months + ' mois');
+  if (days || !parts.length) parts.push(days + ' jour' + (days > 1 ? 's' : ''));
+  return parts.join(', ');
+}
 function renderEntries() {
   dynamicTimeline.replaceChildren();
   entries.forEach(entry => {
     const article=document.createElement('article'); article.className='event dynamic-event';
     const title=document.createElement('h3'); title.textContent=entry.title;
-    const date=document.createElement('time'); date.className='event-date'; date.textContent=formatDate(entry.eventDate);
+    const date=document.createElement('time'); date.className='event-date'; date.dateTime=entry.eventDate; date.textContent=formatDate(entry.eventDate);
+    const age=document.createElement('span'); age.className='event-age'; age.textContent=formatAge(entry.eventDate);
     const description=document.createElement('p'); description.textContent=entry.description;
     const mediaRow=document.createElement('div'); mediaRow.className='media-row';
     entry.media.forEach(media=>mediaRow.append(createMediaButton(media)));
     const actions=document.createElement('div'); actions.className='entry-actions';
     const edit=document.createElement('button'); edit.type='button'; edit.className='small-btn'; edit.textContent='Modifier'; edit.addEventListener('click',()=>openEdit(entry));
     const remove=document.createElement('button'); remove.type='button'; remove.className='small-btn danger'; remove.textContent='Supprimer'; remove.addEventListener('click',()=>deleteEntry(entry));
-    actions.append(edit,remove); article.append(title,date,description,mediaRow,actions); dynamicTimeline.append(article); observer.observe(article);
+    actions.append(edit,remove); article.append(date,title,age,description,mediaRow,actions); dynamicTimeline.append(article); observer.observe(article);
   });
 }
 async function loadEntries() {
@@ -258,9 +308,17 @@ async function loadEntries() {
       return false;
     }
     if (!response.ok) throw new Error(result.error||'Impossible de charger les souvenirs.');
-    entries=result.entries||[];
+    const showReveal=animateAfterPin && !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    entries=(result.entries||[]).slice().reverse();
     renderEntries();
     document.body.classList.add('unlocked');
+    if (showReveal) {
+      requestAnimationFrame(()=>{
+        document.body.classList.add('memory-reveal');
+        document.querySelector('.timeline').scrollIntoView({behavior:'smooth',block:'start'});
+        setTimeout(()=>document.body.classList.remove('memory-reveal'),1800);
+      });
+    }
     accessForm.reset();
     resetPinVisibility();
     try { sessionStorage.setItem('julesViewerPin',viewerPin); } catch {}
@@ -328,8 +386,9 @@ accessForm.addEventListener('submit',async event=>{
   accessButton.disabled=true;
   viewerPin=document.getElementById('viewerPin').value;
   accessStatus.textContent='Vérification du code…';
-  await loadEntries();
-  accessButton.disabled=false;
+  animateAfterPin=true;
+  try { await loadEntries(); }
+  finally { animateAfterPin=false; accessButton.disabled=false; }
 });
 if (viewerPin) loadEntries();
 </script>
